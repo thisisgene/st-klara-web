@@ -1,0 +1,37 @@
+@import '../../common/basics.sass'
+
+a
+  text-decoration: none
+  color: $black
+  display: block
+
+.mobile-menu
+  background: $header-background
+  // height: 100px
+  width: 100vw
+  position: absolute
+  z-index: -1
+  transform: translateY(-100%)
+  transition: transform 200ms ease-in-out
+  &--content
+    padding: 1.5rem 2rem
+    font-size: 1.4rem
+    opacity: 0
+    transition: 200ms opacity ease-in-out
+    &__item
+      border-bottom: 1px solid $black
+      margin-bottom: .5rem
+      padding-bottom: .5rem
+      .sub-menu
+        margin-left: 1.4rem
+        &--item
+          margin: .5rem 0
+  &.is-open
+    // transition: transform 200ms ease-in-out
+    .mobile-menu--content
+      opacity: 1
+      transition: 200ms opacity ease-in-out
+    transform: translateY(0%)
+    // opacity: 1
+  @media(min-width: 861px)
+    display: none

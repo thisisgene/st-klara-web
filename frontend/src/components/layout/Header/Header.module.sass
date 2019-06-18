@@ -1,0 +1,177 @@
+@import '../../common/basics.sass'
+
+
+  
+
+
+.header-container
+  // width: 100vw
+  box-sizing: border-box
+  height: 120px
+  background: $header-background
+  position: sticky
+  top: -70px
+  padding: 0 0 .6rem
+  font-size: 14px
+  z-index: 10
+  @media(min-width: 861px)
+    &.small
+      padding: 0
+      .header
+        height: 50px
+        top: 70px
+        align-items: center
+        @media(max-width: 1060px)
+          &--side
+            display: none
+
+.header
+  background: $header-background
+  height: 100%
+  max-width: 1020px
+  margin: 0 auto
+  padding: 0 1rem
+  position: relative
+  font-family: 'Open Sans', sans-serif
+  display: flex
+  align-items: flex-end
+  justify-content: flex-start
+  a
+    text-decoration: none
+    color: $black !important
+    display: block
+  .nav-burger
+    position: absolute
+    right: 1.5rem
+    // bottom: .3rem
+    width: 1.6rem
+    height: 1.6rem
+    display: flex
+    flex-direction: column
+    justify-content: center
+    cursor: pointer
+    display: none
+    span
+      position: relative
+      display: block
+      width: 1.6rem
+      height: 2px
+      background: rgba(#050505, 1)
+      transition: all 200ms
+      &:before
+        content: ''
+        background: #050505
+        position: absolute
+        left: 0
+        transform: translateY(-.6rem)
+        width: inherit
+        height: 2px
+        transition: all 300ms ease-in-out
+      &:after
+        content: ''
+        background: #050505
+        position: absolute
+        left: 0
+        transform: translateY(.6rem)            
+        width: inherit
+        height: 2px
+        transition: all 300ms ease-in-out
+    &.is-open span
+      background: rgba(#050505, 0)
+      transition: all 200ms
+      &:before
+        transform: rotateZ(45deg) translateY(0)
+        // background: #ef542b
+      &:after
+        transform: rotateZ(-45deg) translateY(0)
+  &--side
+    position: absolute
+    right: 1rem
+    top: 1rem
+    font-size: .9em
+    a
+      color: $black
+      text-decoration: none
+      margin-left: 1rem
+      display: inline
+  &--logo
+    width: 220px
+    margin-right: 2rem
+    display: none
+    &.visible
+      display: block
+    img
+      width: 100%
+  &--logo-wide
+    width: 220px
+    margin-right: 2rem
+    display: none
+    &.visible
+      display: block
+    img
+      width: 70%
+  @media(max-width: 860px)
+    &--logo
+      display: block
+    &--logo-wide.visible
+      display: none
+  &--menu
+    display: flex
+    // position: absolute
+    // bottom: .5rem
+    
+    &__item
+      margin: 0 .6rem
+      cursor: pointer
+      .item--title
+        position: relative
+        z-index: 2
+        border-bottom: 1px solid transparent
+        padding: .2rem
+        transition: all 100ms ease-in-out
+        &.active
+          border-bottom: 1px solid $black
+
+      &:hover
+        .item--title
+          border-bottom: 1px solid $black
+          background: $header-background
+        .sub-menu
+          // transform: translateY(0%)
+          opacity: 1
+          pointer-events: all
+      .sub-menu
+        pointer-events: none
+        z-index: 0
+        transition: all 100ms ease-in-out
+        padding: .5rem 1rem
+        // transform: translateY(-50%)
+        opacity: 0
+        position: absolute
+        background: $header-background
+        &--item
+          span
+            padding: .2rem 0
+            display: inline-block
+
+            border-bottom: 1px solid transparent
+          &.active span
+            border-bottom: 1px solid $black
+          &:hover span
+            border-bottom: 1px solid $black
+
+@media(max-width: 860px)
+  .header-container
+    height: auto
+    // padding-top: 1rem
+    display: fixed
+    top: 0
+  .header
+    padding-top: 1rem
+    &--menu
+      display: none
+    &--side
+      display: none
+    .nav-burger
+      display: block
+
