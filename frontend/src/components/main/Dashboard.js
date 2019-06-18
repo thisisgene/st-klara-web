@@ -5,8 +5,10 @@ import axios from 'axios'
 import Home from '../pages/Home/Home'
 import PageContent from '../pages/PageContent/PageContent'
 
+import cx from 'classnames'
 import styles from './Dashboard.module.sass'
 import Podcasts from '../pages/Podcasts/Podcasts'
+import Spinner from '../common/Spinner/Spinner'
 
 export class Dashboard extends Component {
   state = {
@@ -28,17 +30,15 @@ export class Dashboard extends Component {
 
   render() {
     const { isLoaded, posts } = this.state
-    if (isLoaded) {
-      return (
-        <Fragment>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/seite/:page" component={PageContent} />
-          <Route exact path="/seite/:toppage/:page" component={PageContent} />
-          <Route exact path="/podcasts" component={Podcasts} />
-        </Fragment>
-      )
-    }
-    return <div>Loading ...</div>
+
+    return (
+      <div>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/seite/:page" component={PageContent} />
+        <Route exact path="/seite/:toppage/:page" component={PageContent} />
+        <Route exact path="/podcasts" component={Podcasts} />
+      </div>
+    )
   }
 }
 

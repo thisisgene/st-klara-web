@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import axios from 'axios'
 
+import Spinner from '../../common/Spinner/Spinner'
+
 import styles from './PageContent.module.sass'
 
 export default class PageContent extends Component {
@@ -57,6 +59,6 @@ export default class PageContent extends Component {
         </div>
       )
     }
-    return <div>Loading ...</div>
+    return null
   }
 }

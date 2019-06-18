@@ -6,7 +6,7 @@ class ScrollToTop extends Component {
     if (this.props.location !== prevProps.location) {
       const hash = this.props.location.hash
       if (hash === '') {
-        window.scrollTo(0, 80)
+        window.scrollTo(0, 0)
       } else {
         setTimeout(() => {
           const id = hash.replace('#', '')

@@ -39,6 +39,6 @@ export default class Kontakt extends Component {
         </div>
       )
     }
-    return <div>Loading ...</div>
+    return null
   }
 }

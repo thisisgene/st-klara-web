@@ -1,3 +1,24 @@
+@import '../../common/basics.sass'
+
+.cover-image-container
+  
+  &:after
+    z-index: 1
+    content: ''
+    width: 100vw
+    height: 100vh
+    position: fixed
+    top: 0
+    left: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    background: $background-color
+    opacity: 0
+    transition: opacity 800ms ease-in-out
+  &.loading:after
+    opacity: 1
+
 .cover-image
   width: 100%
   margin: 0
@@ -6,3 +27,4 @@
   
   &--image img
     width: 100%
+  
