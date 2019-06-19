@@ -24,6 +24,7 @@ services:
       - '8080:80'
     environment:
       PMA_HOST: db
+      MYSQL_USER: user
       MYSQL_ROOT_PASSWORD: daEIUF82hdd8_a2f
     networks:
       - wpsite
@@ -42,29 +43,7 @@ services:
       WORDPRESS_DB_PASSWORD: ckj32fn3-df3a2j
     networks:
       - wpsite
-  # App
-  # app:
-  #   depends_on:
-  #     - wordpress
-  #   restart: always
-  #   build: .
-  #   ports:
-  #     - '3000:3000'
-  #   volumes:
-  #     - '.:/app'
-  # frontend:
-  #   command: bash -c 'npm install && npm start'
-  #   container_name: frontend
-  #   expose:
-  #     - '3000'
-  #   restart: always
-  #   image: node
-  #   ports:
-  #     - '3000:3000'
-  #   user: node
-  #   volumes:
-  #     - ./frontend:/home/node/app
-  #   working_dir: /home/node/app
+  # frontend
   frontend:
     volumes:
       - ./frontend/src:/usr/src/app/src
