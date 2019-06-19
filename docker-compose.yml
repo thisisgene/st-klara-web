@@ -24,7 +24,6 @@ services:
       - '8080:80'
     environment:
       PMA_HOST: db
-      MYSQL_USER: user
       MYSQL_ROOT_PASSWORD: daEIUF82hdd8_a2f
     networks:
       - wpsite
