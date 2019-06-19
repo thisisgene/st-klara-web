@@ -32,12 +32,12 @@ export class Dashboard extends Component {
     const { isLoaded, posts } = this.state
 
     return (
-      <div>
+      <Fragment>
         <Route exact path="/" component={Home} />
         <Route exact path="/seite/:page" component={PageContent} />
         <Route exact path="/seite/:toppage/:page" component={PageContent} />
         <Route exact path="/podcasts" component={Podcasts} />
-      </div>
+      </Fragment>
     )
   }
 }
