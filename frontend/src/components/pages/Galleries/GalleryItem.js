@@ -6,8 +6,8 @@ import cx from 'classnames'
 import './Galleries.sass'
 import styles from './Galleries.module.sass'
 
-const dummyHtml =
-  '<ul><li><img src="http://localhost:8000/wp-content/uploads/2019/06/stklara_tuere-1.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/Screenshot-2019-06-18-at-16.40.30.png" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/979124e4-9d5f-4a7e-81a0-daeac2f6dcd2-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/images/2019/photo5951550059562774560-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/03-zara-logo-quer-2048x472.png" /></li></ul>'
+// const dummyHtml =
+//   '<ul><li><img src="http://localhost:8000/wp-content/uploads/2019/06/stklara_tuere-1.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/Screenshot-2019-06-18-at-16.40.30.png" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/979124e4-9d5f-4a7e-81a0-daeac2f6dcd2-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/images/2019/photo5951550059562774560-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/03-zara-logo-quer-2048x472.png" /></li></ul>'
 
 export class ImageItem extends Component {
   render() {
@@ -24,17 +24,12 @@ export class ImageItem extends Component {
 }
 
 export class ImageWrapper extends Component {
-  // let imgArray = [...images]
   render() {
-    console.log(this.props.images)
-    let array = [{ name: 'hallo' }, { name: 'bubu' }]
-    console.log(array)
-    // images.map(img => console.log('IMAGEN: ', img))
     const { images, onClick } = this.props
     return (
       <div className={styles['gallery-item--images']}>
-        {images.map(item => (
-          <ImageItem src={item.src} onClick={onClick} />
+        {images.map((item, index) => (
+          <ImageItem key={index} src={item.src} onClick={onClick} />
         ))}
       </div>
     )
@@ -58,22 +53,14 @@ export default class GalleryItem extends Component {
 
   parseHtmlContent = html => {
     let parser = new DOMParser()
-    let htmlDoc = parser.parseFromString(dummyHtml, 'text/html')
+    let htmlDoc = parser.parseFromString(html, 'text/html')
     let newHtml = document.createElement('div')
     newHtml.className = 'gallery-container'
 
-    // let htmlElement = document.createElement('div')
-    // htmlElement.innerHTML = html
     let htmlCollection = htmlDoc.querySelectorAll('img')
     let htmlArray = Array.from(htmlCollection)
-    // let htmlCollection = []
-    // for (let img of htmlArray) {
-    //   htmlCollection.push({ name: img.name })
-    // }
-    console.log('before: ', htmlArray)
+
     return <ImageWrapper images={htmlArray} onClick={this.onImageClick} />
-    // console.log(newHtml.outerHTML)
-    return newHtml.outerHTML
   }
 
   render() {
@@ -100,15 +87,7 @@ export default class GalleryItem extends Component {
         {this.state.showContent && (
           <div>
             {gallery.content.rendered && (
-              <div
-
-              // dangerouslySetInnerHTML={{
-              //   __html: this.parseHtmlContent(gallery.content.rendered)
-              // }}
-              >
-                {this.parseHtmlContent(gallery.content.rendered)}
-                {/* {images && images.map(img => <div>{img}</div>)} */}
-              </div>
+              <div>{this.parseHtmlContent(gallery.content.rendered)}</div>
             )}
 
             {galleries.filter(
