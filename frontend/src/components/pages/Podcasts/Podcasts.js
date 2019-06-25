@@ -7,32 +7,31 @@ import styles from './Podcasts.module.sass'
 
 export default class Podcasts extends Component {
   state = {
-    media: [],
+    podcasts: [],
     isLoaded: false
   }
 
   componentDidMount() {
     axios
-      .get('/wp-json/wp/v2/media?mime_type=audio/mpeg')
+      .get('/wp-json/wp/v2/podcasts')
       .then(res =>
         this.setState({
-          media: res.data,
+          podcasts: res.data,
           isLoaded: true
         })
       )
       .catch(err => console.log(err))
   }
   render() {
-    const { isLoaded, media } = this.state
+    const { isLoaded, podcasts } = this.state
     if (isLoaded) {
       return (
         <div className={styles['podcasts']}>
           <h1>Klara-Cast</h1>
-          <h2>Bibel</h2>
-          {media
-            .filter(file => file.media_details.album === 'bibel')
-            .map((file, index) => (
-              <AudioItem key={index} file={file} />
+          {podcasts
+            // .filter(podcast => podcast.acf.category === 'bibel')
+            .map((podcast, index) => (
+              <AudioItem key={index} podcast={podcast} />
             ))}
         </div>
       )

@@ -42,16 +42,15 @@ services:
       WORDPRESS_DB_PASSWORD: ckj32fn3-df3a2j
     networks:
       - wpsite
-  # frontend
+  #frontend
   frontend:
     volumes:
       - ./frontend/src:/usr/src/app/src
       - ./frontend/public:/usr/src/app/public
     command: npm run start
-    build: ./frontend
+    build: ./frontend/
     ports:
       - 3000:3000
-
     networks:
       - wpsite
 

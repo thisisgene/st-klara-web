@@ -14,7 +14,7 @@ export default class AudioItem extends Component {
   }
 
   render() {
-    const { file } = this.props
+    const { podcast } = this.props
     return (
       <div className={styles['audio-item']}>
         <div>
@@ -22,16 +22,21 @@ export default class AudioItem extends Component {
             className={styles['audio-item--body']}
             onClick={this.toggleDescription}
           >
-            <div>{file.title.rendered}</div>
+            <div>{podcast.title.rendered}</div>
           </div>
           {this.state.showDescription && (
             <div className={styles['audio-item--description']}>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: file.caption.rendered
+                  __html: podcast.content.rendered
                 }}
               />
-              <div>play</div>
+              <audio controls>
+                <source
+                  src={podcast.acf.file.url}
+                  type={podcast.acf.file.mime_type}
+                />
+              </audio>
             </div>
           )}
         </div>
