@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import GalleryItem from './GalleryItem'
+
+import styles from './Galleries.module.sass'
+
 export default class Galleries extends Component {
   state = {
     galleries: [],
@@ -22,22 +26,11 @@ export default class Galleries extends Component {
     const { isLoaded, galleries } = this.state
 
     return (
-      <div>
+      <div className={styles['galleries']}>
         {galleries
           .filter(gallery => gallery.acf.parent_dir === false)
           .map((gallery, index) => (
-            <div key={index}>
-              <div>{gallery.title.rendered}</div>
-              {galleries
-                .filter(
-                  subGallery => subGallery.acf.parent_dir.ID === gallery.id
-                )
-                .map((subGallery, sIndex) => (
-                  <div key={sIndex} style={{ marginLeft: '10px' }}>
-                    {subGallery.title.rendered}
-                  </div>
-                ))}
-            </div>
+            <GalleryItem key={index} galleries={galleries} gallery={gallery} />
           ))}
       </div>
     )
