@@ -9,6 +9,7 @@ import cx from 'classnames'
 import styles from './Dashboard.module.sass'
 import Podcasts from '../pages/Podcasts/Podcasts'
 import Spinner from '../common/Spinner/Spinner'
+import Galleries from '../pages/Galleries/Galleries'
 
 export class Dashboard extends Component {
   state = {
@@ -34,6 +35,7 @@ export class Dashboard extends Component {
     return (
       <Fragment>
         <Route exact path="/" component={Home} />
+        <Route exact path="/seite/galerie" component={Galleries} />
         <Route exact path="/seite/:page" component={PageContent} />
         <Route exact path="/seite/:toppage/:page" component={PageContent} />
         <Route exact path="/podcasts" component={Podcasts} />
