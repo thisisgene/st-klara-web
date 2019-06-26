@@ -8,9 +8,6 @@ import cx from 'classnames'
 import './Galleries.sass'
 import styles from './Galleries.module.sass'
 
-// const dummyHtml =
-//   '<ul><li><img src="http://localhost:8000/wp-content/uploads/2019/06/stklara_tuere-1.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/Screenshot-2019-06-18-at-16.40.30.png" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/979124e4-9d5f-4a7e-81a0-daeac2f6dcd2-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/images/2019/photo5951550059562774560-1024x768.jpg" /></li><li><img src="http://localhost:8000/wp-content/uploads/2019/06/03-zara-logo-quer-2048x472.png" /></li></ul>'
-
 export class ImageItem extends Component {
   state = {
     image: {},
@@ -24,12 +21,12 @@ export class ImageItem extends Component {
           image: res.data,
           isLoaded: true
         })
-        this.props.addToList(res.data)
+        this.props.addToList(res.data, this.props.index)
       })
       .catch(err => console.log(err))
   }
   render() {
-    const { src, id, onClick } = this.props
+    const { index, src, id, onClick } = this.props
 
     return (
       <Fragment>
@@ -57,6 +54,7 @@ export class ImageWrapper extends Component {
         {images.map((item, index) => (
           <ImageItem
             key={index}
+            index={index}
             src={item.src}
             id={item.dataset.id}
             onClick={onClick}
@@ -82,9 +80,11 @@ export default class GalleryItem extends Component {
     })
   }
 
-  addToList = image => {
+  addToList = (image, index) => {
     let imgArray = this.state.imageList
-    imgArray.push(image)
+    imgArray.splice(index, 0, image)
+    // console.log(index, ' + ', image.id)
+
     this.setState(
       {
         imageList: imgArray
@@ -93,6 +93,13 @@ export default class GalleryItem extends Component {
         console.log(this.state.imageList)
       }
     )
+  }
+
+  closeGallery = () => {
+    console.log('CLOSE')
+    this.setState({
+      showImageGallery: false
+    })
   }
 
   updateGallery = id => {
@@ -137,6 +144,7 @@ export default class GalleryItem extends Component {
             images={this.state.imageList}
             current={this.state.currentImage}
             updateGallery={this.updateGallery}
+            closeGallery={this.closeGallery}
           />
         )}
         <div
