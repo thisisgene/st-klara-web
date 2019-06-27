@@ -48,6 +48,10 @@ services:
       - ./frontend/src:/usr/src/app/src
       - ./frontend/public:/usr/src/app/public
     command: npm run start
+    container_name: frontend
+    expose:
+      - '3000'
+    image: node
     build: ./frontend
     ports:
       - 3000:3000

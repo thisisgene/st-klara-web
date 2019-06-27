@@ -31,23 +31,24 @@ export default class CoverImage extends Component {
           [styles['loading']]: !isLoaded
         })}
       >
-        {pages
-          .filter(page => page.title.rendered === 'Titelbild')
-          .map((page, index) => (
-            <div
-              key={index}
-              className={cx(styles['cover-image'], {
-                [styles['loading']]: !isLoaded
-              })}
-            >
-              {index === 0 && (
-                <div
-                  className={styles['cover-image--image']}
-                  dangerouslySetInnerHTML={{ __html: page.content.rendered }}
-                />
-              )}
-            </div>
-          ))}
+        {pages &&
+          pages
+            .filter(page => page.title.rendered === 'Titelbild')
+            .map((page, index) => (
+              <div
+                key={index}
+                className={cx(styles['cover-image'], {
+                  [styles['loading']]: !isLoaded
+                })}
+              >
+                {index === 0 && (
+                  <div
+                    className={styles['cover-image--image']}
+                    dangerouslySetInnerHTML={{ __html: page.content.rendered }}
+                  />
+                )}
+              </div>
+            ))}
       </div>
     )
   }

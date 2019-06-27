@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import axios from 'axios'
 
 import Home from '../pages/Home/Home'
@@ -35,8 +35,10 @@ export class Dashboard extends Component {
     return (
       <Fragment>
         <Route exact path="/" component={Home} />
-        <Route exact path="/seite/galerie" component={Galleries} />
-        <Route exact path="/seite/:page" component={PageContent} />
+        <Switch>
+          <Route exact path="/seite/galerie" component={Galleries} />
+          <Route exact path="/seite/:page" component={PageContent} />
+        </Switch>
         <Route exact path="/seite/:toppage/:page" component={PageContent} />
         <Route exact path="/podcasts" component={Podcasts} />
       </Fragment>
