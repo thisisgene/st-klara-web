@@ -1,0 +1,26 @@
+@import '../../common/basics.sass'
+
+
+.home
+  width: 100%
+  display: flex
+  &--wrapper
+    flex: 1
+    // height: 100px
+    // padding: 0 1rem 1rem 3rem
+    .main-link
+      padding: 0 0 1rem 2rem
+      margin-right: .5rem
+      &.grey
+        background: $light-grey
+      a
+        text-decoration: underline
+  @media(max-width: 860px)
+    display: block
+    &--wrapper
+      margin-bottom: 2.5rem
+  @media(max-width: 400px)
+    .main-link
+      margin: 0
+      padding: 0 0 1rem 1rem
+    

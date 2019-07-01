@@ -1,7 +1,8 @@
 .page-content
   flex: 1
-  // margin-right: 240px
-  padding: 0 3rem
+  // width: 100%
+  // font-size: .8rem
+  padding: 0 3rem 0 1rem
   a
     display: inline
   img
@@ -9,3 +10,14 @@
     float: right
     margin: auto 1rem
     display: inline
+  @media(max-width: 1024px)
+    padding-right: 1.5rem
+  
+  @media(max-width: 860px)
+    padding: 0 2rem
+    img
+      float: none
+      margin: auto
+      display: block
+  @media(max-width: 400px)
+    padding: 0 1rem

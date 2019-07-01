@@ -1,22 +1,39 @@
 @import '../common/basics.sass'
 
-  
+.dashboard
+  flex: 3
+
 .contact
   // flex: 1
   width: 240px !important
   // position: absolute
   // right: 0
-  h2
-    padding-left: 1rem
-
+  .contact-title
+    margin-left: 1rem
   &--inner__content
     padding: 1rem 0 0 1rem
     background: $light-grey
+    
     p
       margin: 0
     *
       margin: 0
+      
     img
       margin-top: 1rem
       margin-bottom: -3px
       width: 100%
+
+  @media(max-width: 860px)
+    // margin-bottom: 2rem
+    width: 100vw !important
+    padding: 0
+    &--inner__content
+      padding: 1rem 2rem
+    .contact-title
+      margin-left: 2rem 
+  @media(max-width: 400px)
+    &--inner__content
+      padding: 1rem
+    .contact-title
+      margin-left: 1rem
