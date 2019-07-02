@@ -173,11 +173,13 @@ export default class GalleryItem extends Component {
                 })}
               >
                 <div className={styles['gallery-item--content__inner']}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: gallery.excerpt.rendered
-                    }}
-                  />
+                  {gallery.excerpt && gallery.excerpt.rendered && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: gallery.excerpt.rendered
+                      }}
+                    />
+                  )}
                   {this.parseHtmlContent(gallery.content.rendered)}
                 </div>
               </div>
