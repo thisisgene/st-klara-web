@@ -56,7 +56,7 @@ export default class CoverImage extends Component {
               {index === 0 && (
                 <div
                   className={styles['cover-image--image']}
-                  style={{ backgroundImage: `url('${i[0].src}')` }}
+                  // style={{ backgroundImage: `url('${i[0].src}')` }}
                 >
                   <img src={i[0].src} alt="" />
                 </div>
