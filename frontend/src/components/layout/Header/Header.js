@@ -108,7 +108,11 @@ export class Header extends Component {
               ))}
           </div>
         </div>
-        <MobileMenu menuItems={menuItems} isOpen={this.state.mobileMenuOpen} />
+        <MobileMenu
+          menuItems={menuItems}
+          onMobileMenuOpen={this.onMobileMenuOpen}
+          isOpen={this.state.mobileMenuOpen}
+        />
       </div>
     )
   }

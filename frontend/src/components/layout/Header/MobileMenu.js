@@ -6,7 +6,7 @@ import styles from './MobileMenu.module.sass'
 
 export class MobileMenu extends Component {
   render() {
-    const { menuItems, isOpen } = this.props
+    const { menuItems, isOpen, onMobileMenuOpen } = this.props
     return (
       <div
         className={cx(styles['mobile-menu'], {
@@ -20,6 +20,7 @@ export class MobileMenu extends Component {
                 <NavLink
                   to={`/seite/${item.link}`}
                   className={styles['item--title']}
+                  onClick={onMobileMenuOpen}
                 >
                   {item.title}
                 </NavLink>
@@ -30,6 +31,7 @@ export class MobileMenu extends Component {
                         key={index}
                         to={`/seite/${item.link}/${subItem.link}`}
                         className={styles['sub-menu--item']}
+                        onClick={onMobileMenuOpen}
                       >
                         <span>{subItem.title}</span>
                       </NavLink>
