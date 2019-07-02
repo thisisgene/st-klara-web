@@ -27,21 +27,21 @@ export class ImageItem extends Component {
   }
   render() {
     const { index, src, id, onClick } = this.props
-
+    const { isLoaded, image } = this.state
     return (
       <Fragment>
-        {this.state.image && this.state.isLoaded && (
+        {image && isLoaded && (
           <div
-            onClick={onClick.bind(this, this.state.image.id)}
+            onClick={onClick.bind(this, image.id)}
             className={styles['gallery-img-wrapper']}
           >
             <img
               src={
-                this.state.image.media_details &&
-                this.state.image.media_details.sizes &&
-                this.state.image.media_details.sizes.thumbnail
-                  ? this.state.image.media_details.sizes.thumbnail.source_url
-                  : this.state.image.media_details.sizes.full.source_url
+                image.media_details &&
+                image.media_details.sizes &&
+                image.media_details.sizes.thumbnail
+                  ? image.media_details.sizes.thumbnail.source_url
+                  : image.media_details.sizes.full.source_url
               }
               alt=""
             />
