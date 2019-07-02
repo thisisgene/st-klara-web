@@ -8,6 +8,8 @@ frontend/node_modules
 /.pnp
 .pnp.js
 
+wp-content
+
 # testing
 /coverage
 
