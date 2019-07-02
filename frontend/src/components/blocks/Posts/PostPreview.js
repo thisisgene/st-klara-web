@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import moment from 'moment'
+import localization from 'moment/locale/de'
+
 import ImageItem from '../ImageItem'
 
 import styles from './Posts.module.sass'
@@ -19,9 +22,16 @@ export default class PostPreview extends Component {
     return (
       <div className={styles['post']}>
         <div className={styles['post-text']}>
-          <div className={styles['post--title']}>{post.title.rendered}</div>
+          <div
+            className={styles['post--title']}
+            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+          />
           {category === 'events' && (
-            <div className={styles['post--date']}>{post.acf.date_time}</div>
+            <div className={styles['post--date']}>
+              {moment(post.acf.date_time)
+                .locale('de', localization)
+                .format('DD. MMMM YYYY - HH:mm')}
+            </div>
           )}
           <div
             className={styles['post--excerpt']}
