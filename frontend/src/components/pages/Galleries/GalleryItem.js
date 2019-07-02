@@ -172,7 +172,14 @@ export default class GalleryItem extends Component {
                   [styles['visible']]: this.state.showContent
                 })}
               >
-                {this.parseHtmlContent(gallery.content.rendered)}
+                <div className={styles['gallery-item--content__inner']}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: gallery.excerpt.rendered
+                    }}
+                  />
+                  {this.parseHtmlContent(gallery.content.rendered)}
+                </div>
               </div>
             )}
 
