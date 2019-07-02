@@ -195,7 +195,9 @@ export default class GalleryItem extends Component {
                 .map((subGallery, sIndex) => (
                   <div
                     key={sIndex}
-                    className={styles['gallery-item--sub-item']}
+                    className={cx(styles['gallery-item--sub-item'], {
+                      [styles['visible']]: this.state.showContent
+                    })}
                   >
                     <GalleryItem galleries={galleries} gallery={subGallery} />
                   </div>

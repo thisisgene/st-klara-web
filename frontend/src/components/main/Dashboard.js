@@ -11,6 +11,7 @@ import Events from '../pages/Events/Events'
 
 import cx from 'classnames'
 import styles from './Dashboard.module.sass'
+import Press from '../pages/Press/Press'
 
 export class Dashboard extends Component {
   state = {
@@ -42,7 +43,10 @@ export class Dashboard extends Component {
           <Route exact path="/seite/podcasts" component={Podcasts} />
           <Route exact path="/seite/:page" component={PageContent} />
         </Switch>
-        <Route exact path="/seite/:toppage/:page" component={PageContent} />
+        <Switch>
+          <Route exact path="/seite/wir_ueber_uns/presse" component={Press} />
+          <Route exact path="/seite/:toppage/:page" component={PageContent} />
+        </Switch>
       </div>
     )
   }

@@ -6,6 +6,14 @@ import ImageItem from '../ImageItem'
 import styles from './Posts.module.sass'
 
 export default class PostPreview extends Component {
+  state = {
+    showPlayer: false
+  }
+
+  onShowPlayerClick = () => {
+    this.setState({ showPlayer: true })
+  }
+
   render() {
     const { post, category } = this.props
     return (
@@ -19,14 +27,27 @@ export default class PostPreview extends Component {
             className={styles['post--excerpt']}
             dangerouslySetInnerHTML={{ __html: post.content.rendered }}
           />
-          {category === 'podcasts' && <a href="">anhören...</a>
-          // <Link
-          //   to={`/${category}/${post.id}/${post.slug}`}
-          //   className={styles['post--link']}
-          // >
-          //   mehr...
-          // </Link>
-          }
+          {category === 'podcasts' && (
+            <div>
+              {this.state.showPlayer ? (
+                <div className={styles['podcast']}>
+                  <audio controls ref={ref => (this.player = ref)}>
+                    <source
+                      src={post.acf.file.url}
+                      type={post.acf.file.mime_type}
+                    />
+                  </audio>
+                </div>
+              ) : (
+                <button
+                  onClick={this.onShowPlayerClick}
+                  className={'button-link'}
+                >
+                  anhören...
+                </button>
+              )}
+            </div>
+          )}
         </div>
         {post.featured_media !== 0 && (
           <div className={styles['post-image']}>

@@ -36,7 +36,7 @@ export default class Posts extends Component {
         {isLoaded && (
           <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
             {posts.map((post, index) => (
-              <div>
+              <div key={index}>
                 {index <= 3 && (
                   <PostPreview key={index} post={post} category={category} />
                 )}
