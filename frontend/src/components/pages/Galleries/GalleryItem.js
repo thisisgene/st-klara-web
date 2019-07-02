@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery'
 import arrow from '../../common/assets/arrow.png'
 
 import cx from 'classnames'
-import './Galleries.sass'
+// import './Galleries.sass'
 import styles from './Galleries.module.sass'
 
 export class ImageItem extends Component {
@@ -36,7 +36,13 @@ export class ImageItem extends Component {
             className={styles['gallery-img-wrapper']}
           >
             <img
-              src={this.state.image.media_details.sizes.thumbnail.source_url}
+              src={
+                this.state.image.media_details &&
+                this.state.image.media_details.sizes &&
+                this.state.image.media_details.sizes.thumbnail
+                  ? this.state.image.media_details.sizes.thumbnail.source_url
+                  : this.state.image.media_details.sizes.full.source_url
+              }
               alt=""
             />
           </div>
@@ -85,14 +91,9 @@ export default class GalleryItem extends Component {
     imgArray.splice(index, 0, image)
     // console.log(index, ' + ', image.id)
 
-    this.setState(
-      {
-        imageList: imgArray
-      },
-      () => {
-        console.log(this.state.imageList)
-      }
-    )
+    this.setState({
+      imageList: imgArray
+    })
   }
 
   closeGallery = () => {
@@ -163,10 +164,16 @@ export default class GalleryItem extends Component {
             <img src={arrow} alt="" />
           </div>
         </div>
-        {this.state.showContent && (
+        {
           <div>
             {gallery.content.rendered && (
-              <div>{this.parseHtmlContent(gallery.content.rendered)}</div>
+              <div
+                className={cx(styles['gallery-item--content'], {
+                  [styles['visible']]: this.state.showContent
+                })}
+              >
+                {this.parseHtmlContent(gallery.content.rendered)}
+              </div>
             )}
 
             {galleries.filter(
@@ -185,7 +192,7 @@ export default class GalleryItem extends Component {
                   </div>
                 ))}
           </div>
-        )}
+        }
       </div>
     )
   }
