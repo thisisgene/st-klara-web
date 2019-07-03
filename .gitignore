@@ -8,7 +8,7 @@ frontend/node_modules
 /.pnp
 .pnp.js
 
-wp-content
+# wp-content
 
 # testing
 /coverage
