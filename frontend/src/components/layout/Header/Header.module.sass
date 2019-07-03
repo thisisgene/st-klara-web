@@ -110,7 +110,8 @@
       display: block
     img
       width: 70%
-  @media(max-width: 860px)
+  
+  @media(max-width: 768px)
     &--logo
       display: block
     &--logo-wide.visible
@@ -123,6 +124,9 @@
     &__item
       margin: 0 .6rem
       cursor: pointer
+      @media(max-width: 820px)
+        font-size: .85rem
+        margin: 0 .4rem
       .item--title
         position: relative
         z-index: 2
@@ -160,7 +164,7 @@
           &:hover span
             border-bottom: 1px solid $black
 
-@media(max-width: 860px)
+@media(max-width: 768px)
   .header-container
     height: auto
     // padding-top: 1rem
