@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import PostPreview from './PostPreview'
+import Spinner from '../../common/Spinner/Spinner'
 
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
 import cx from 'classnames'
 import styles from './Posts.module.sass'
 
@@ -33,7 +35,7 @@ export default class Posts extends Component {
         <div className={cx('main-title', styles['posts--title'])}>
           {categoryTitle}
         </div>
-        {isLoaded && (
+        {isLoaded ? (
           <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
             {posts.map((post, index) => (
               <div key={index}>
@@ -42,6 +44,12 @@ export default class Posts extends Component {
                 )}
               </div>
             ))}
+          </div>
+        ) : (
+          <div className={spinnerStyles['spinner-container']}>
+            <div className={spinnerStyles['spinner-container--wrapper']}>
+              <Spinner />
+            </div>
           </div>
         )}
       </div>

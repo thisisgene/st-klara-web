@@ -83,7 +83,9 @@ export default class GalleryItem extends Component {
     imageList: [],
     currentImage: null,
     showImageGallery: false,
-    previouslyOpened: false
+    previouslyOpened: this.props.previouslyOpened
+      ? this.props.previouslyOpened
+      : false
   }
 
   toggleContent = () => {

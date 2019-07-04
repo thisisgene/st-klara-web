@@ -32,7 +32,11 @@ export default class Galleries extends Component {
           <div className={styles['galleries']}>
             <h1>Galerie</h1>
             <br />
-            <GalleryItem gallery={gallery} showContent={true} />
+            <GalleryItem
+              gallery={gallery}
+              showContent={true}
+              previouslyOpened={true}
+            />
           </div>
         )}
       </div>

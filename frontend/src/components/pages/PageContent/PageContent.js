@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Spinner from '../../common/Spinner/Spinner'
 
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
 import styles from './PageContent.module.sass'
 
 export default class PageContent extends Component {
@@ -59,6 +60,12 @@ export default class PageContent extends Component {
         </div>
       )
     }
-    return null
+    return (
+      <div className={spinnerStyles['spinner-container']}>
+        <div className={spinnerStyles['spinner-container--wrapper']}>
+          <Spinner />
+        </div>
+      </div>
+    )
   }
 }

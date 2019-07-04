@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import GalleryItem from '../Galleries/GalleryItem'
+import Spinner from '../../common/Spinner/Spinner'
 
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
 import styles from '../Galleries/Galleries.module.sass'
 
 export default class Press extends Component {
@@ -27,11 +29,20 @@ export default class Press extends Component {
 
     return (
       <div className={styles['galleries']}>
-        {press
-          .filter(gallery => gallery.acf.parent_dir === false)
-          .map((gallery, index) => (
-            <GalleryItem key={index} galleries={press} gallery={gallery} />
-          ))}
+        <h1>Presse</h1>
+        {isLoaded ? (
+          press
+            .filter(gallery => gallery.acf.parent_dir === false)
+            .map((gallery, index) => (
+              <GalleryItem key={index} galleries={press} gallery={gallery} />
+            ))
+        ) : (
+          <div className={spinnerStyles['spinner-container']}>
+            <div className={spinnerStyles['spinner-container--wrapper']}>
+              <Spinner />
+            </div>
+          </div>
+        )}
       </div>
     )
   }
