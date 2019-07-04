@@ -8,7 +8,8 @@ import styles from './Dashboard.module.sass'
 export default class Kontakt extends Component {
   state = {
     pages: [],
-    image: {},
+    newsletterImage: '',
+    rundgangImage: '',
     rundgangId: null
   }
 
@@ -23,13 +24,27 @@ export default class Kontakt extends Component {
         })
       )
       .catch(err => console.log(err))
+    axios.get('/wp-json/wp/v2/pages?slug=newsletter').then(res => {
+      axios
+        .get(`/wp-json/wp/v2/media/${res.data[0].featured_media}`)
+        .then(sres => {
+          this.setState({
+            newsletterImage: sres.data.guid.rendered,
+            isLoaded: true
+          })
+        })
+        .catch(err => console.log(err))
+
+        .catch(err => console.log(err))
+    })
+
     axios.get('/wp-json/wp/v2/galleries?slug=rundgang').then(res => {
       axios
         .get(`/wp-json/wp/v2/media/${res.data[0].featured_media}`)
         .then(sres => {
           this.setState({
             rundgangId: res.data[0].id,
-            image: sres.data.guid.rendered,
+            rundgangImage: sres.data.guid.rendered,
             isLoaded: true
           })
         })
@@ -40,7 +55,13 @@ export default class Kontakt extends Component {
   }
 
   render() {
-    const { isLoaded, pages, image, rundgangId } = this.state
+    const {
+      isLoaded,
+      pages,
+      rundgangImage,
+      rundgangId,
+      newsletterImage
+    } = this.state
     if (isLoaded) {
       return (
         <div className={styles['contact']}>
@@ -60,14 +81,25 @@ export default class Kontakt extends Component {
           <br />
           <div className={styles['contact--inner']}>
             <div className={cx('main-title', styles['contact-title'])}>
+              NEWSLETTER
+            </div>
+
+            <div className={styles['contact--inner__content']}>
+              <Link to={'/seite/newsletter'}>Newsletter abonnieren...</Link>
+              <img src={newsletterImage} alt="" />
+            </div>
+          </div>
+          <br />
+          <div className={styles['contact--inner']}>
+            <div className={cx('main-title', styles['contact-title'])}>
               RUNDGANG
             </div>
-            {image && (
+            {rundgangImage && (
               <div className={styles['contact--inner__content']}>
                 <Link to={`/seite/galerie/${rundgangId}`}>
                   Spazieren sie durch St. Klara...
                 </Link>
-                <img src={image} alt="" />
+                <img src={rundgangImage} alt="" />
               </div>
             )}
           </div>
