@@ -8,7 +8,8 @@ import styles from './Dashboard.module.sass'
 export default class Kontakt extends Component {
   state = {
     pages: [],
-    image: {}
+    image: {},
+    rundgangId: null
   }
 
   componentDidMount() {
@@ -26,8 +27,8 @@ export default class Kontakt extends Component {
       axios
         .get(`/wp-json/wp/v2/media/${res.data[0].featured_media}`)
         .then(sres => {
-          console.log(sres.data.guid)
           this.setState({
+            rundgangId: res.data[0].id,
             image: sres.data.guid.rendered,
             isLoaded: true
           })
@@ -39,7 +40,7 @@ export default class Kontakt extends Component {
   }
 
   render() {
-    const { isLoaded, pages, image } = this.state
+    const { isLoaded, pages, image, rundgangId } = this.state
     if (isLoaded) {
       return (
         <div className={styles['contact']}>
@@ -61,12 +62,14 @@ export default class Kontakt extends Component {
             <div className={cx('main-title', styles['contact-title'])}>
               RUNDGANG
             </div>
-            <div className={styles['contact--inner__content']}>
-              <Link to="/seite/galerie/170">
-                Spazieren sie durch St. Klara...
-              </Link>
-              {image && <img src={image} alt="" />}
-            </div>
+            {image && (
+              <div className={styles['contact--inner__content']}>
+                <Link to={`/seite/galerie/${rundgangId}`}>
+                  Spazieren sie durch St. Klara...
+                </Link>
+                <img src={image} alt="" />
+              </div>
+            )}
           </div>
         </div>
       )
