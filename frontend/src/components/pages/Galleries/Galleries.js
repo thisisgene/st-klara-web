@@ -13,13 +13,14 @@ export default class Galleries extends Component {
 
   componentDidMount() {
     axios
-      .get('/wp-json/wp/v2/galleries')
-      .then(res =>
+      .get('/wp-json/wp/v2/galleries/?per_page=100')
+      .then(res => {
+        console.log(res.data.length)
         this.setState({
           galleries: res.data,
           isLoaded: true
         })
-      )
+      })
       .catch(err => console.log(err))
   }
   render() {
