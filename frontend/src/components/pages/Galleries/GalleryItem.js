@@ -7,6 +7,7 @@ import arrow from '../../common/assets/arrow.png'
 import cx from 'classnames'
 // import './Galleries.sass'
 import styles from './Galleries.module.sass'
+import Spinner from '../../common/Spinner/Spinner'
 
 export class ImageItem extends Component {
   state = {
@@ -30,7 +31,7 @@ export class ImageItem extends Component {
     const { isLoaded, image } = this.state
     return (
       <Fragment>
-        {image && isLoaded && (
+        {image && isLoaded ? (
           <div
             onClick={onClick.bind(this, image.id)}
             className={styles['gallery-img-wrapper']}
@@ -45,6 +46,10 @@ export class ImageItem extends Component {
               }
               alt=""
             />
+          </div>
+        ) : (
+          <div className={styles['image-spinner']}>
+            <Spinner />
           </div>
         )}
       </Fragment>
@@ -137,7 +142,7 @@ export default class GalleryItem extends Component {
 
   render() {
     const { galleries, gallery } = this.props
-    const images = this.parseHtmlContent(this.props.gallery.content.rendered)
+    // const images = this.parseHtmlContent(this.props.gallery.content.rendered)
     return (
       <div className={styles['gallery-item']}>
         {this.state.showImageGallery && (
