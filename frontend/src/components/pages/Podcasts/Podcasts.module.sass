@@ -2,7 +2,7 @@
 
 .podcasts
   flex: 1
-  margin-right: 240px
+  // margin-right: 240px
   padding: 0 3rem
   .audio-item
     margin: 0 0 .3rem
@@ -12,8 +12,21 @@
       // width: 100%
       padding: .3rem .6rem
       display: flex
+      justify-content: space-between
       background: $light-grey
       cursor: pointer
+      .arrow
+        transform: rotateZ(0deg)
+        width: 20px
+        height: 16px
+        display: flex
+        align-items: center
+        font-size: 1.2rem
+        color: $orange
+        img
+          width: 100%
+        &.open
+          transform: rotateZ(180deg)
     &--description
       // width: 100%
       padding: .5rem 1rem

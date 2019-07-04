@@ -3,6 +3,9 @@ import axios from 'axios'
 
 import AudioItem from './AudioItem'
 
+import Spinner from '../../common/Spinner/Spinner'
+
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
 import styles from './Podcasts.module.sass'
 
 export default class Podcasts extends Component {
@@ -51,19 +54,24 @@ export default class Podcasts extends Component {
   // }
   render() {
     const { isLoaded, podcasts, looping } = this.state
-    if (!looping) {
-      return (
-        <div className={styles['podcasts']}>
-          <h1>Klara-Cast</h1>
-          {!looping &&
-            podcasts
-              // .filter(podcast => podcast.acf.category === 'bibel')
-              .map((podcast, index) => (
-                <AudioItem key={index} podcast={podcast} />
-              ))}
-        </div>
-      )
-    }
-    return <div>Loading ...</div>
+
+    return (
+      <div className={styles['podcasts']}>
+        <h1>Klara-Cast</h1>
+        {!looping ? (
+          podcasts
+            // .filter(podcast => podcast.acf.category === 'bibel')
+            .map((podcast, index) => (
+              <AudioItem key={index} podcast={podcast} />
+            ))
+        ) : (
+          <div className={spinnerStyles['spinner-container']}>
+            <div className={spinnerStyles['spinner-container--wrapper']}>
+              <Spinner />
+            </div>
+          </div>
+        )}
+      </div>
+    )
   }
 }

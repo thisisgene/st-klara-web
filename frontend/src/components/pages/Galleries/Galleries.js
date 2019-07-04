@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import GalleryItem from './GalleryItem'
+import Spinner from '../../common/Spinner/Spinner'
 
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
 import styles from './Galleries.module.sass'
 
 export default class Galleries extends Component {
@@ -44,7 +46,7 @@ export default class Galleries extends Component {
       <div className={styles['galleries']}>
         <h1>Galerie</h1>
         <br />
-        {!looping &&
+        {!looping ? (
           galleries
             .filter(gallery => gallery.acf.parent_dir === false)
             .map((gallery, index) => (
@@ -53,7 +55,14 @@ export default class Galleries extends Component {
                 galleries={galleries}
                 gallery={gallery}
               />
-            ))}
+            ))
+        ) : (
+          <div className={spinnerStyles['spinner-container']}>
+            <div className={spinnerStyles['spinner-container--wrapper']}>
+              <Spinner />
+            </div>
+          </div>
+        )}
       </div>
     )
   }
