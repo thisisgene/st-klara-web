@@ -8,31 +8,59 @@ import styles from './Podcasts.module.sass'
 export default class Podcasts extends Component {
   state = {
     podcasts: [],
-    isLoaded: false
+    perPage: 30,
+    isLoaded: false,
+    looping: true
   }
-
-  componentDidMount() {
+  getRequest = currentPage => {
     axios
-      .get('/wp-json/wp/v2/podcasts')
-      .then(res =>
-        this.setState({
-          podcasts: res.data,
-          isLoaded: true
-        })
+      .get(
+        `/wp-json/wp/v2/podcasts/?per_page=${
+          this.state.perPage
+        }&offset=${currentPage}`
       )
+      .then(res => {
+        console.log(res.data)
+        if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
+          let array = this.state.podcasts
+          array = [...array, ...res.data]
+          this.setState({ podcasts: array })
+          this.getRequest(currentPage + this.state.perPage)
+        } else {
+          let array = this.state.podcasts
+          array = [...array, ...res.data]
+          console.log('array: ', array)
+          this.setState({ podcasts: array, looping: false })
+        }
+      })
       .catch(err => console.log(err))
   }
+  componentDidMount() {
+    this.getRequest(0)
+  }
+  // componentDidMount() {
+  //   axios
+  //     .get('/wp-json/wp/v2/podcasts')
+  //     .then(res =>
+  //       this.setState({
+  //         podcasts: res.data,
+  //         isLoaded: true
+  //       })
+  //     )
+  //     .catch(err => console.log(err))
+  // }
   render() {
-    const { isLoaded, podcasts } = this.state
-    if (isLoaded) {
+    const { isLoaded, podcasts, looping } = this.state
+    if (!looping) {
       return (
         <div className={styles['podcasts']}>
           <h1>Klara-Cast</h1>
-          {podcasts
-            // .filter(podcast => podcast.acf.category === 'bibel')
-            .map((podcast, index) => (
-              <AudioItem key={index} podcast={podcast} />
-            ))}
+          {!looping &&
+            podcasts
+              // .filter(podcast => podcast.acf.category === 'bibel')
+              .map((podcast, index) => (
+                <AudioItem key={index} podcast={podcast} />
+              ))}
         </div>
       )
     }
