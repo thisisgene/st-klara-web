@@ -8,10 +8,11 @@ import Podcasts from '../pages/Podcasts/Podcasts'
 import Spinner from '../common/Spinner/Spinner'
 import Galleries from '../pages/Galleries/Galleries'
 import Events from '../pages/Events/Events'
+import Press from '../pages/Press/Press'
+import GalleryPage from '../pages/Galleries/GalleryPage'
 
 import cx from 'classnames'
 import styles from './Dashboard.module.sass'
-import Press from '../pages/Press/Press'
 
 export class Dashboard extends Component {
   state = {
@@ -39,6 +40,11 @@ export class Dashboard extends Component {
         <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/seite/galerie" component={Galleries} />
+          <Route
+            exact
+            path="/seite/galerie/:galleryId"
+            component={GalleryPage}
+          />
           <Route exact path="/seite/veranstaltungen" component={Events} />
           <Route exact path="/seite/podcasts" component={Podcasts} />
           <Route exact path="/seite/:page" component={PageContent} />

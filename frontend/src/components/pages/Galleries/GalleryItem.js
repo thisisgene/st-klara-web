@@ -74,7 +74,7 @@ export class ImageWrapper extends Component {
 
 export default class GalleryItem extends Component {
   state = {
-    showContent: false,
+    showContent: this.props.showContent ? this.props.showContent : false,
     imageList: [],
     currentImage: null,
     showImageGallery: false
@@ -185,9 +185,10 @@ export default class GalleryItem extends Component {
               </div>
             )}
 
-            {galleries.filter(
-              subGallery => subGallery.acf.parent_dir.ID === gallery.id
-            ).length > 0 &&
+            {galleries &&
+              galleries.filter(
+                subGallery => subGallery.acf.parent_dir.ID === gallery.id
+              ).length > 0 &&
               galleries
                 .filter(
                   subGallery => subGallery.acf.parent_dir.ID === gallery.id
