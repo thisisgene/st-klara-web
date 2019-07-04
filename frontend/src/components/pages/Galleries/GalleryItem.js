@@ -82,12 +82,14 @@ export default class GalleryItem extends Component {
     showContent: this.props.showContent ? this.props.showContent : false,
     imageList: [],
     currentImage: null,
-    showImageGallery: false
+    showImageGallery: false,
+    previouslyOpened: false
   }
 
   toggleContent = () => {
     this.setState({
-      showContent: !this.state.showContent
+      showContent: !this.state.showContent,
+      previouslyOpened: true
     })
   }
 
@@ -178,16 +180,19 @@ export default class GalleryItem extends Component {
                   [styles['visible']]: this.state.showContent
                 })}
               >
-                <div className={styles['gallery-item--content__inner']}>
-                  {gallery.excerpt && gallery.excerpt.rendered && (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: gallery.excerpt.rendered
-                      }}
-                    />
-                  )}
-                  {this.parseHtmlContent(gallery.content.rendered)}
-                </div>
+                <Fragment>
+                  <div className={styles['gallery-item--content__inner']}>
+                    {gallery.excerpt && gallery.excerpt.rendered && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: gallery.excerpt.rendered
+                        }}
+                      />
+                    )}
+                    {this.state.previouslyOpened &&
+                      this.parseHtmlContent(gallery.content.rendered)}
+                  </div>
+                </Fragment>
               </div>
             )}
 
