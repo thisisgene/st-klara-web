@@ -63,8 +63,12 @@ export default class ImageGallery extends Component {
             wrapper={{ display: 'flex', alignItems: 'center' }}
             key={images.length}
           >
-            {images.map(img => (
-              <div className={styles['image-gallery--wrapper__image']}>
+            {images.map((img, index) => (
+              <div
+                className={cx(styles['image-gallery--wrapper__image'], {
+                  [styles['visible']]: index === this.state.currentSlide
+                })}
+              >
                 <img
                   className={styles['gallery-image']}
                   src={img.guid.rendered}
