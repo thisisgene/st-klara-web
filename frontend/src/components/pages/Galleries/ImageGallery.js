@@ -8,8 +8,16 @@ import styles from './Galleries.module.sass'
 
 export default class ImageGallery extends Component {
   state = {
-    current: this.props.current
+    current: this.props.current,
+    currentSlide: 0
   }
+
+  componentDidMount() {
+    this.props.images.map((img, index) => {
+      if (img.id === this.state.current) this.setState({ currentSlide: index })
+    })
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
@@ -17,10 +25,20 @@ export default class ImageGallery extends Component {
       })
     }
   }
+
+  swipeCallback = (index, e) => {
+    console.log(this.props.images.length, index)
+    this.setState({
+      currentSlide: index
+    })
+  }
+
   render() {
     const { images, updateGallery, closeGallery } = this.props
+    const { current } = this.state
     let reactSwipeEl
-    console.log('current image: ', this.state.current)
+    let currentImage
+
     return (
       <div className={styles['image-gallery']}>
         <div className={styles['close-button']} onClick={closeGallery}>
@@ -28,27 +46,40 @@ export default class ImageGallery extends Component {
         </div>
         <div className={styles['image-gallery--wrapper']}>
           <div className={cx(styles['image-arrow'], styles['left'])}>
-            <div onClick={() => reactSwipeEl.prev()}>
-              <img src={arrow} alt="" />
-            </div>
+            {this.state.currentSlide > 0 && (
+              <div onClick={() => reactSwipeEl.prev()}>
+                <img src={arrow} alt="" />
+              </div>
+            )}
           </div>
           <ReactSwipe
-            swipeOptions={{ continuous: false, startSlide: 1 }}
+            className={styles['swipe-container']}
+            swipeOptions={{
+              continuous: false,
+              startSlide: this.state.currentSlide,
+              callback: (index, e) => this.swipeCallback(index, e)
+            }}
             ref={el => (reactSwipeEl = el)}
             wrapper={{ display: 'flex', alignItems: 'center' }}
             key={images.length}
           >
             {images.map(img => (
               <div className={styles['image-gallery--wrapper__image']}>
-                <img src={img.guid.rendered} alt="" />
+                <img
+                  className={styles['gallery-image']}
+                  src={img.guid.rendered}
+                  alt=""
+                />
               </div>
             ))}
           </ReactSwipe>
 
           <div className={styles['image-arrow']}>
-            <div onClick={() => reactSwipeEl.next()}>
-              <img src={arrow} alt="" />
-            </div>
+            {this.state.currentSlide < images.length - 1 && (
+              <div onClick={() => reactSwipeEl.next()}>
+                <img src={arrow} alt="" />
+              </div>
+            )}
           </div>
         </div>
       </div>
