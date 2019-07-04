@@ -152,9 +152,10 @@ export default class GalleryItem extends Component {
           className={styles['gallery-item--body']}
           onClick={this.toggleContent}
         >
-          <div className={styles['gallery-item--title']}>
-            {gallery.title.rendered}
-          </div>
+          <div
+            className={styles['gallery-item--title']}
+            dangerouslySetInnerHTML={{ __html: gallery.title.rendered }}
+          />
 
           <div
             className={cx(styles['arrow'], {
