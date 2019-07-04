@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import ReactSwipe from 'react-swipe'
 
 import arrow from '../../common/assets/arrow_right.png'
 
@@ -18,6 +19,7 @@ export default class ImageGallery extends Component {
   }
   render() {
     const { images, updateGallery, closeGallery } = this.props
+    let reactSwipeEl
     console.log('current image: ', this.state.current)
     return (
       <div className={styles['image-gallery']}>
@@ -25,43 +27,29 @@ export default class ImageGallery extends Component {
           <i className={'fas fa-times'} />
         </div>
         <div className={styles['image-gallery--wrapper']}>
-          {images
-            // .filter(img => img.id === this.state.current)
-            .map((img, index, array) => (
-              <Fragment key={index}>
-                {img.id === this.state.current && (
-                  <Fragment>
-                    <div className={cx(styles['image-arrow'], styles['left'])}>
-                      {array[index - 1] && (
-                        <div
-                          onClick={updateGallery.bind(
-                            this,
-                            array[index - 1].id
-                          )}
-                        >
-                          <img src={arrow} alt="" />
-                        </div>
-                      )}
-                    </div>
-                    <div className={styles['image-gallery--wrapper__image']}>
-                      <img src={img.guid.rendered} alt="" />
-                    </div>
-                    <div className={styles['image-arrow']}>
-                      {array[index + 1] && (
-                        <div
-                          onClick={updateGallery.bind(
-                            this,
-                            array[index + 1].id
-                          )}
-                        >
-                          <img src={arrow} alt="" />
-                        </div>
-                      )}
-                    </div>
-                  </Fragment>
-                )}
-              </Fragment>
+          <div className={cx(styles['image-arrow'], styles['left'])}>
+            <div onClick={() => reactSwipeEl.prev()}>
+              <img src={arrow} alt="" />
+            </div>
+          </div>
+          <ReactSwipe
+            swipeOptions={{ continuous: false, startSlide: 1 }}
+            ref={el => (reactSwipeEl = el)}
+            wrapper={{ display: 'flex', alignItems: 'center' }}
+            key={images.length}
+          >
+            {images.map(img => (
+              <div className={styles['image-gallery--wrapper__image']}>
+                <img src={img.guid.rendered} alt="" />
+              </div>
             ))}
+          </ReactSwipe>
+
+          <div className={styles['image-arrow']}>
+            <div onClick={() => reactSwipeEl.next()}>
+              <img src={arrow} alt="" />
+            </div>
+          </div>
         </div>
       </div>
     )
