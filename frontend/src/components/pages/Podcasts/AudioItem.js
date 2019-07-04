@@ -22,7 +22,7 @@ export default class AudioItem extends Component {
             className={styles['audio-item--body']}
             onClick={this.toggleDescription}
           >
-            <div>{podcast.title.rendered}</div>
+            <div dangerouslySetInnerHTML={{ __html: podcast.title.rendered }} />
           </div>
           {this.state.showDescription && (
             <div className={styles['audio-item--description']}>
