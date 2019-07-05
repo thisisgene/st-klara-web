@@ -166,7 +166,7 @@ export default class PressGalleryItem extends Component {
               <div
                 className={styles['gallery-item--title']}
                 dangerouslySetInnerHTML={{
-                  __html: gallery.acf && gallery.acf.gallery_name
+                  __html: gallery.title && gallery.title.rendered
                 }}
               />
 
