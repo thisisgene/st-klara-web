@@ -11,13 +11,17 @@ export default class Home extends Component {
     return (
       <div className={styles['home']}>
         <div className={styles['home--wrapper']}>
-          <Posts category={'events'} categoryTitle="Veranstaltungen" />
+          <Posts
+            category={'events'}
+            categoryTitle="Veranstaltungen"
+            limitTo={4}
+          />
           <div className={cx(styles['main-link'], styles['grey'])}>
             <Link to={'/seite/veranstaltungen'}>Alle Veranstaltungen</Link>
           </div>
         </div>
         <div className={styles['home--wrapper']}>
-          <Posts category={'podcasts'} categoryTitle="Podcasts" />
+          <Posts category={'podcasts'} categoryTitle="Podcasts" limitTo={4} />
           <div className={styles['main-link']}>
             <Link to={'/seite/podcasts'}>Alle Podcasts</Link>
           </div>

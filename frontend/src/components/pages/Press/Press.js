@@ -39,16 +39,6 @@ export default class Press extends Component {
 
   componentDidMount() {
     this.getRequest(0)
-
-    // axios
-    //   .get('/wp-json/wp/v2/press_entries')
-    //   .then(res =>
-    //     this.setState({
-    //       press: res.data,
-    //       isLoaded: true
-    //     })
-    //   )
-    //   .catch(err => console.log(err))
   }
   render() {
     const { looping, press } = this.state
