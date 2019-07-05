@@ -195,7 +195,7 @@ export default class PressGalleryItem extends Component {
                         />
                       )}
                       {// this.state.previouslyOpened &&
-                      gallery && (
+                      gallery && gallery.acf.media_gallery && (
                         <GalleryParser
                           gallery={gallery.acf.media_gallery}
                           addToList={this.addToList}
