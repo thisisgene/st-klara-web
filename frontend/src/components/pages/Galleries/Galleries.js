@@ -10,7 +10,6 @@ import styles from './Galleries.module.sass'
 export default class Galleries extends Component {
   state = {
     perPage: 30,
-    currentPage: 0,
     looping: true,
     galleries: [],
     isLoaded: false
