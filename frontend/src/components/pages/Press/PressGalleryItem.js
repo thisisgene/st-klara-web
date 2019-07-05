@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 
 import arrow from '../../common/assets/arrow.png'
+import pdfIcon from '../../common/assets/pdf_icon.png'
 import Spinner from '../../common/Spinner/Spinner'
 import ImageGallery from '../Galleries/ImageGallery'
 
@@ -55,11 +56,11 @@ export class FileItem extends Component {
                 <a href={file.guid.rendered} target="_blank">
                   <img
                     src={
-                      file.media_details &&
-                      file.media_details.sizes &&
-                      file.media_details.sizes.medium
-                        ? file.media_details.sizes.medium.source_url
-                        : file.media_details.sizes.full.source_url
+                      file.media_details && file.media_details.sizes
+                        ? file.media_details.sizes.medium
+                          ? file.media_details.sizes.medium.source_url
+                          : file.media_details.sizes.full.source_url
+                        : pdfIcon
                     }
                     alt=""
                   />
