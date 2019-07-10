@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import AudioItem from './AudioItem'
+import FilterBox from './FilterBox'
 
 import Spinner from '../../common/Spinner/Spinner'
 
@@ -13,7 +14,8 @@ export default class Podcasts extends Component {
     podcasts: [],
     perPage: 30,
     isLoaded: false,
-    looping: true
+    looping: true,
+    activeCategory: null
   }
   getRequest = currentPage => {
     axios
@@ -41,29 +43,36 @@ export default class Podcasts extends Component {
   componentDidMount() {
     this.getRequest(0)
   }
-  // componentDidMount() {
-  //   axios
-  //     .get('/wp-json/wp/v2/podcasts')
-  //     .then(res =>
-  //       this.setState({
-  //         podcasts: res.data,
-  //         isLoaded: true
-  //       })
-  //     )
-  //     .catch(err => console.log(err))
-  // }
+
+  setActiveCategory = category => {
+    this.setState({
+      activeCategory: category
+    })
+  }
+
   render() {
     const { isLoaded, podcasts, looping } = this.state
-
+    const { activeCategory } = this.state
     return (
       <div className={styles['podcasts']}>
         <h1>Klara-Cast</h1>
         {!looping ? (
-          podcasts
-            // .filter(podcast => podcast.acf.category === 'bibel')
-            .map((podcast, index) => (
-              <AudioItem key={index} podcast={podcast} />
-            ))
+          <div>
+            <FilterBox
+              items={podcasts}
+              setActiveCategory={this.setActiveCategory}
+              activeCategory={this.state.activeCategory}
+            />
+            {podcasts
+              .filter(
+                podcast =>
+                  podcast.acf.category === activeCategory ||
+                  activeCategory === null
+              )
+              .map((podcast, index) => (
+                <AudioItem key={index} podcast={podcast} />
+              ))}
+          </div>
         ) : (
           <div className={spinnerStyles['spinner-container']}>
             <div className={spinnerStyles['spinner-container--wrapper']}>

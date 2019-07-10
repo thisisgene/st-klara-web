@@ -39,9 +39,20 @@ export default class Posts extends Component {
   componentDidMount() {
     this.getRequest(0)
   }
+
+  checkDate = date => {
+    console.log(date)
+  }
+
   render() {
     const { looping, posts } = this.state
-    const { category, categoryTitle, mainLink, limitTo } = this.props
+    const {
+      category,
+      categoryTitle,
+      mainLink,
+      limitTo,
+      onlyAfterToday
+    } = this.props
     return (
       <div className={styles['posts']}>
         <div className={cx('main-title', styles['posts--title'])}>
@@ -49,17 +60,23 @@ export default class Posts extends Component {
         </div>
         {!looping ? (
           <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
-            {posts.map((post, index) => (
-              <div key={index}>
-                {limitTo ? (
-                  index <= limitTo - 1 && (
+            {posts
+              // .filter(post => onlyAfterToday && (post) => this.checkDate(post.afc.date_time))
+              .map((post, index) => (
+                <div key={index}>
+                  {limitTo ? (
+                    index <= limitTo - 1 && (
+                      <PostPreview
+                        key={index}
+                        post={post}
+                        category={category}
+                      />
+                    )
+                  ) : (
                     <PostPreview key={index} post={post} category={category} />
-                  )
-                ) : (
-                  <PostPreview key={index} post={post} category={category} />
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
           </div>
         ) : (
           <div className={spinnerStyles['spinner-container']}>

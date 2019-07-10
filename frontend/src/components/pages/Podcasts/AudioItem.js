@@ -25,7 +25,12 @@ export default class AudioItem extends Component {
             className={styles['audio-item--body']}
             onClick={this.toggleDescription}
           >
-            <div dangerouslySetInnerHTML={{ __html: podcast.title.rendered }} />
+            <div className={styles['audio-item--body__title']}>
+              <div
+                dangerouslySetInnerHTML={{ __html: podcast.title.rendered }}
+              />
+              <span>{podcast.acf.category && podcast.acf.category}</span>
+            </div>
             <div
               className={cx(styles['arrow'], {
                 [styles['open']]: this.state.showDescription

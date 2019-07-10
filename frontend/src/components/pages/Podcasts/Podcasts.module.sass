@@ -15,6 +15,16 @@
       justify-content: space-between
       background: $light-grey
       cursor: pointer
+      &__title
+        display: flex
+        align-items: center
+        span
+          margin-left: 1rem
+          padding: .1rem .4rem
+          font-size: .6rem
+          color: #454545
+          border-radius: 5px
+          background: #fff
       .arrow
         transform: rotateZ(0deg)
         width: 20px
@@ -34,3 +44,5 @@
       background: $light-grey
       margin-top: 1px
 
+  @media(max-width: 416px)
+    padding: 0 1rem

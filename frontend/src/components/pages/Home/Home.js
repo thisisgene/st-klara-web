@@ -14,6 +14,7 @@ export default class Home extends Component {
           <Posts
             category={'events'}
             categoryTitle="Veranstaltungen"
+            onlyAfterToday={true}
             limitTo={4}
           />
           <div className={cx(styles['main-link'], styles['grey'])}>
