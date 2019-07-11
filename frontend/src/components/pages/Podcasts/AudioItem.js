@@ -29,7 +29,9 @@ export default class AudioItem extends Component {
               <div
                 dangerouslySetInnerHTML={{ __html: podcast.title.rendered }}
               />
-              <span>{podcast.acf.category && podcast.acf.category}</span>
+              {podcast.acf.category && podcast.acf.category !== '' && (
+                <span>{podcast.acf.category}</span>
+              )}
             </div>
             <div
               className={cx(styles['arrow'], {

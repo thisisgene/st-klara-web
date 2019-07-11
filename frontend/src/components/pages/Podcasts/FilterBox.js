@@ -14,12 +14,14 @@ export default class FilterBox extends Component {
 
   parseCategories = items => {
     let catArray = []
-    items.map(item => {
-      const cat = item.acf.category && item.acf.category
-      if (!catArray.includes(cat)) {
-        catArray.push(cat)
-      }
-    })
+    items
+      .filter(item => item.acf.category && item.acf.category !== '')
+      .map(item => {
+        const cat = item.acf.category && item.acf.category
+        if (!catArray.includes(cat)) {
+          catArray.push(cat)
+        }
+      })
     this.setState({ categories: catArray })
   }
 
