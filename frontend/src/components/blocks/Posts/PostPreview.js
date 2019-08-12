@@ -38,7 +38,7 @@ export default class PostPreview extends Component {
             className={styles['post--excerpt']}
             dangerouslySetInnerHTML={{ __html: post.content.rendered }}
           />
-          {category === 'podcasts' && (
+          {category === 'podcasts' && post.acf.file && (
             <div>
               {this.state.showPlayer ? (
                 <div className={styles['podcast']}>

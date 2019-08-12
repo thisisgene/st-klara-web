@@ -213,6 +213,18 @@ export default class GalleryItem extends Component {
                       [styles['visible']]: this.state.showContent
                     })}
                   >
+                    {/* <ImageItem
+                      index={index}
+                      src={item.src}
+                      id={item.dataset.id}
+                      onClick={onClick}
+                      addToList={addToList}
+                    />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: subGallery.title.rendered
+                      }}
+                    /> */}
                     <GalleryItem galleries={galleries} gallery={subGallery} />
                   </div>
                 ))}

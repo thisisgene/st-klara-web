@@ -48,12 +48,14 @@ export default class AudioItem extends Component {
                   __html: podcast.content.rendered
                 }}
               />
-              <audio controls>
-                <source
-                  src={podcast.acf.file.url}
-                  type={podcast.acf.file.mime_type}
-                />
-              </audio>
+              {podcast.acf.file && (
+                <audio controls>
+                  <source
+                    src={podcast.acf.file.url}
+                    type={podcast.acf.file.mime_type}
+                  />
+                </audio>
+              )}
             </div>
           )}
         </div>
