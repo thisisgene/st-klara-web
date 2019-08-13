@@ -1,9 +1,6 @@
 @import '../../common/basics.sass'
 
-a
-  text-decoration: none
-  color: $black
-  display: block
+
 
 .mobile-menu
   background: $background-color
@@ -26,6 +23,10 @@ a
         margin-left: 1.4rem
         &--item
           margin: .5rem 0
+    a
+      text-decoration: none
+      color: $black !important
+      display: block !important
   &.is-open
     // transition: transform 200ms ease-in-out
     .mobile-menu--content

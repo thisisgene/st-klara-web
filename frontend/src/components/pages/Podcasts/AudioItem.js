@@ -48,13 +48,26 @@ export default class AudioItem extends Component {
                   __html: podcast.content.rendered
                 }}
               />
-              {podcast.acf.file && (
-                <audio controls>
-                  <source
-                    src={podcast.acf.file.url}
-                    type={podcast.acf.file.mime_type}
-                  />
-                </audio>
+              {podcast.acf.file && podcast.acf.file.type === 'audio' ? (
+                <div className={styles['media-container']}>
+                  <audio width="100%" controls>
+                    <source
+                      src={podcast.acf.file.url}
+                      type={podcast.acf.file.mime_type}
+                    />
+                  </audio>
+                </div>
+              ) : (
+                podcast.acf.file.type === 'video' && (
+                  <div className={styles['media-container']}>
+                    <video width="100%" controls>
+                      <source
+                        src={podcast.acf.file.url}
+                        type={podcast.acf.file.mime_type}
+                      />
+                    </video>
+                  </div>
+                )
               )}
             </div>
           )}
