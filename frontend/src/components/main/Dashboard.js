@@ -50,7 +50,7 @@ export class Dashboard extends Component {
           <Route exact path="/seite/:page" component={PageContent} />
         </Switch>
         <Switch>
-          <Route exact path="/seite/wir_ueber_uns/presse" component={Press} />
+          <Route exact path="/seite/presse" component={Press} />
           <Route exact path="/seite/:toppage/:page" component={PageContent} />
         </Switch>
       </div>
