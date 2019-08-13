@@ -15,19 +15,20 @@ export const menuItems = [
     title: 'Galerie',
     link: 'galerie'
   },
+
   {
     title: 'Wir über uns',
     link: 'wir_ueber_uns',
     subMenu: [
       {
-        title: 'Presse',
-        link: 'presse'
-      },
-      {
         title: 'Förderverein',
         link: 'foerderverein'
       }
     ]
+  },
+  {
+    title: 'Presse',
+    link: 'presse'
   },
   {
     title: 'Kontakt',
