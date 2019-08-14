@@ -226,7 +226,7 @@ export default class GalleryItem extends Component {
             >
               {!noTitleImage && <div>{this.getTitleImage(gallery)}</div>}
               <div
-                // className={styles['gallery-item--title']}
+                className={styles['gallery-title']}
                 dangerouslySetInnerHTML={{ __html: gallery.title.rendered }}
               />
             </Link>
