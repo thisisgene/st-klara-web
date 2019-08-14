@@ -23,6 +23,29 @@ export default class Galleries extends Component {
       )
       .catch(err => console.log(err))
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params !== this.props.match.params) {
+      this.setState(
+        {
+          param: this.props.match.params.galleryId,
+          isLoaded: false
+        },
+        () => {
+          axios
+            .get(`/wp-json/wp/v2/galleries/${this.state.param}`)
+            .then(res =>
+              this.setState({
+                gallery: res.data,
+                isLoaded: true
+              })
+            )
+            .catch(err => console.log(err))
+        }
+      )
+    }
+  }
+
   render() {
     const { isLoaded, gallery } = this.state
 
