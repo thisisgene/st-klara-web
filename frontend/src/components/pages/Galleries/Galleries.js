@@ -53,6 +53,7 @@ export default class Galleries extends Component {
                 key={index}
                 galleries={galleries}
                 gallery={gallery}
+                topLevel={true}
               />
             ))
         ) : (

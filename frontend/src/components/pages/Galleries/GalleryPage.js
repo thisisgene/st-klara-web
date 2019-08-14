@@ -36,6 +36,7 @@ export default class Galleries extends Component {
               gallery={gallery}
               showContent={true}
               previouslyOpened={true}
+              noTitleImage={true}
             />
           </div>
         )}

@@ -15,13 +15,48 @@
 
     &--body
       // width: 100%
-      padding: .3rem .6rem
+      
       // display: flex
-      background: $light-grey
+      
       cursor: pointer
       display: flex
       align-items: center
       justify-content: space-between
+      &.top-level
+        padding: .3rem .6rem
+        background: $light-grey  
+        ~ .item-content-container
+          padding: 0 .5rem
+          display: grid
+          grid-template-columns: 1fr 1fr 1fr 1fr
+          background: $light-grey
+          // img
+          //   width: 20px
+        &.contains-images
+          ~ .item-content-container
+            .gallery-item--images
+              padding: 1rem .5rem
+              margin-top: 0 !important
+              background: $light-grey !important
+            display: block
+        &--content
+          
+          padding: .5rem 1rem 1rem
+          display: none
+          &.visible
+            display: block
+      
+      .title-link
+        text-decoration: none
+        color: $black !important
+        font-weight: normal
+        display: flex
+        align-items: center
+        &.is-title
+          font-weight: bold
+        img
+          margin-right: .5rem
+
       .arrow
         transform: rotateZ(0deg)
         width: 20px
@@ -36,24 +71,29 @@
           transform: rotateZ(180deg)
     &--content
       display: none
+      
       &.visible
         display: block
+      
       &__inner
-        background: $light-grey
-        padding: .5rem 1rem 1rem
+        // background: $light-grey
+        
         margin-top: 2px
         p
           margin: 0
     &--images
       // padding: .5rem 1rem
       color: #444
-      background: $light-grey
-      margin-top: 1px
+      // background: $light-grey
+      // margin-top: 1px
+      margin-top: 2rem
       display: grid
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 
-      grid-gap: 4px
+      grid-gap: 3px
       align-items: stretch
+      
+      
       @media(max-width: 768px)
         grid-template-columns: 1fr 1fr 1fr
       
@@ -61,7 +101,7 @@
         width: 100%
         height: 100%
         
-        margin: 2px
+        margin-bottom: -4px
         cursor: pointer
         
         img

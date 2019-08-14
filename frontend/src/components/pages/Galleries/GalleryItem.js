@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import ImageGallery from './ImageGallery'
@@ -82,6 +83,7 @@ export default class GalleryItem extends Component {
     showContent: this.props.showContent ? this.props.showContent : false,
     imageList: [],
     currentImage: null,
+    containsImages: false,
     showImageGallery: false,
     previouslyOpened: this.props.previouslyOpened
       ? this.props.previouslyOpened
@@ -126,15 +128,53 @@ export default class GalleryItem extends Component {
     })
   }
 
+  getTitleImage = gallery => {
+    if (gallery.featured_media !== 0) {
+      return (
+        <ImageItem
+          // key={index}
+          // index={index}
+          // src={item.src}
+          id={gallery.featured_media}
+          onClick={this.onImageClick}
+          // addToList={addToList}
+        />
+      )
+    } else {
+      let parser = new DOMParser()
+      let htmlDoc = parser.parseFromString(
+        gallery.content.rendered,
+        'text/html'
+      )
+      let htmlCollection = htmlDoc.querySelectorAll('img')
+      let htmlArray = Array.from(htmlCollection)
+      console.log('ARRAY: ', htmlArray[0])
+      const item = htmlArray[0]
+      if (htmlArray.length > 0) {
+        return (
+          <ImageItem
+            // key={index}
+            // index={index}
+            src={item.src}
+            id={item.dataset.id}
+            onClick={this.onImageClick}
+            // addToList={addToList}
+          />
+        )
+      } else {
+        return null
+      }
+    }
+  }
+
   parseHtmlContent = html => {
     let parser = new DOMParser()
     let htmlDoc = parser.parseFromString(html, 'text/html')
-    let newHtml = document.createElement('div')
-    newHtml.className = 'gallery-container'
-
     let htmlCollection = htmlDoc.querySelectorAll('img')
     let htmlArray = Array.from(htmlCollection)
-
+    // if (htmlArray.length > 0) {
+    //   this.setState({ containsImages: true })
+    // }
     return (
       <ImageWrapper
         images={htmlArray}
@@ -145,7 +185,7 @@ export default class GalleryItem extends Component {
   }
 
   render() {
-    const { galleries, gallery } = this.props
+    const { galleries, gallery, topLevel, noTitleImage } = this.props
     // const images = this.parseHtmlContent(this.props.gallery.content.rendered)
     return (
       <div className={styles['gallery-item']}>
@@ -158,24 +198,52 @@ export default class GalleryItem extends Component {
           />
         )}
         <div
-          className={styles['gallery-item--body']}
-          onClick={this.toggleContent}
+          className={cx(
+            styles['gallery-item--body'],
+            {
+              [styles['top-level']]: topLevel === true
+            },
+            {
+              [styles['contains-images']]: this.state.imageList.length > 0
+            }
+          )}
+          onClick={topLevel && this.toggleContent}
         >
-          <div
-            className={styles['gallery-item--title']}
-            dangerouslySetInnerHTML={{ __html: gallery.title.rendered }}
-          />
+          {topLevel ? (
+            <Fragment>
+              {/* <div>{this.getTitleImage(gallery)}</div> */}
+              <div
+                className={styles['gallery-item--title']}
+                dangerouslySetInnerHTML={{ __html: gallery.title.rendered }}
+              />
+            </Fragment>
+          ) : (
+            <Link
+              to={`/seite/galerie/${gallery.id}`}
+              className={cx(styles['title-link'], {
+                [styles['is-title']]: noTitleImage
+              })}
+            >
+              {!noTitleImage && <div>{this.getTitleImage(gallery)}</div>}
+              <div
+                // className={styles['gallery-item--title']}
+                dangerouslySetInnerHTML={{ __html: gallery.title.rendered }}
+              />
+            </Link>
+          )}
 
-          <div
-            className={cx(styles['arrow'], {
-              [styles['open']]: this.state.showContent
-            })}
-          >
-            <img src={arrow} alt="" />
-          </div>
+          {topLevel && (
+            <div
+              className={cx(styles['arrow'], {
+                [styles['open']]: this.state.showContent
+              })}
+            >
+              <img src={arrow} alt="" />
+            </div>
+          )}
         </div>
         {
-          <div>
+          <div className={styles['item-content-container']}>
             {gallery.content.rendered && (
               <div
                 className={cx(styles['gallery-item--content'], {
