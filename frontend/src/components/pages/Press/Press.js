@@ -6,7 +6,7 @@ import PressGalleryItem from './PressGalleryItem'
 import Spinner from '../../common/Spinner/Spinner'
 
 import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
-import styles from '../Galleries/Galleries.module.sass'
+import styles from './Press.module.sass'
 
 export default class Press extends Component {
   state = {

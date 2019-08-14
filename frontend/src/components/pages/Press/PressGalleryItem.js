@@ -7,7 +7,7 @@ import Spinner from '../../common/Spinner/Spinner'
 import ImageGallery from '../Galleries/ImageGallery'
 
 import cx from 'classnames'
-import styles from '../Galleries/Galleries.module.sass'
+import styles from './Press.module.sass'
 
 export class FileItem extends Component {
   state = {
