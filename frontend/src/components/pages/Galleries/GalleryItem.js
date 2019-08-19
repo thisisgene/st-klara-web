@@ -137,7 +137,7 @@ export default class GalleryItem extends Component {
           // src={item.src}
           id={gallery.featured_media}
           onClick={this.onImageClick}
-          // addToList={addToList}
+          addToList={this.addToList}
         />
       )
     } else {
@@ -244,7 +244,7 @@ export default class GalleryItem extends Component {
         </div>
         {
           <div className={styles['item-content-container']}>
-            {gallery.content.rendered && (
+            {!topLevel && noTitleImage && gallery.content.rendered && (
               <div
                 className={cx(styles['gallery-item--content'], {
                   [styles['visible']]: this.state.showContent
@@ -281,18 +281,6 @@ export default class GalleryItem extends Component {
                       [styles['visible']]: this.state.showContent
                     })}
                   >
-                    {/* <ImageItem
-                      index={index}
-                      src={item.src}
-                      id={item.dataset.id}
-                      onClick={onClick}
-                      addToList={addToList}
-                    />
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: subGallery.title.rendered
-                      }}
-                    /> */}
                     <GalleryItem galleries={galleries} gallery={subGallery} />
                   </div>
                 ))}
