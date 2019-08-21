@@ -60,9 +60,14 @@ export class ImageItem extends Component {
 
 export class ImageWrapper extends Component {
   render() {
-    const { images, onClick, addToList } = this.props
+    const { images, onClick, addToList, isIE11 } = this.props
+    console.log('image wrapper IE11 ', isIE11)
     return (
-      <div className={styles['gallery-item--images']}>
+      <div
+        className={cx(styles['gallery-item--images'], {
+          [styles['ie11']]: isIE11
+        })}
+      >
         {images.map((item, index) => (
           <ImageItem
             key={index}
@@ -80,6 +85,7 @@ export class ImageWrapper extends Component {
 
 export default class GalleryItem extends Component {
   state = {
+    isIE11: this.props.isIE11,
     showContent: this.props.showContent ? this.props.showContent : false,
     imageList: [],
     currentImage: null,
@@ -100,7 +106,6 @@ export default class GalleryItem extends Component {
   addToList = (image, index) => {
     let imgArray = this.state.imageList
     imgArray.splice(index, 0, image)
-    // console.log(index, ' + ', image.id)
 
     this.setState({
       imageList: imgArray
@@ -167,7 +172,7 @@ export default class GalleryItem extends Component {
     }
   }
 
-  parseHtmlContent = html => {
+  parseHtmlContent = (html, isIE11) => {
     let parser = new DOMParser()
     let htmlDoc = parser.parseFromString(html, 'text/html')
     let htmlCollection = htmlDoc.querySelectorAll('img')
@@ -180,13 +185,13 @@ export default class GalleryItem extends Component {
         images={htmlArray}
         onClick={this.onImageClick}
         addToList={this.addToList}
+        isIE11={isIE11}
       />
     )
   }
 
   render() {
-    const { galleries, gallery, topLevel, noTitleImage } = this.props
-    // const images = this.parseHtmlContent(this.props.gallery.content.rendered)
+    const { galleries, gallery, topLevel, noTitleImage, isIE11 } = this.props
     return (
       <div className={styles['gallery-item']}>
         {this.state.showImageGallery && (
@@ -243,7 +248,11 @@ export default class GalleryItem extends Component {
           )}
         </div>
         {
-          <div className={styles['item-content-container']}>
+          <div
+            className={cx(styles['item-content-container'], {
+              [styles['ie11']]: isIE11
+            })}
+          >
             {!topLevel && noTitleImage && gallery.content.rendered && (
               <div
                 className={cx(styles['gallery-item--content'], {
@@ -251,7 +260,7 @@ export default class GalleryItem extends Component {
                 })}
               >
                 <Fragment>
-                  <div className={styles['gallery-item--content__inner']}>
+                  <div className={cx(styles['gallery-item--content__inner'])}>
                     {gallery.excerpt && gallery.excerpt.rendered && (
                       <div
                         dangerouslySetInnerHTML={{
@@ -260,7 +269,7 @@ export default class GalleryItem extends Component {
                       />
                     )}
                     {this.state.previouslyOpened &&
-                      this.parseHtmlContent(gallery.content.rendered)}
+                      this.parseHtmlContent(gallery.content.rendered, isIE11)}
                   </div>
                 </Fragment>
               </div>
@@ -281,7 +290,11 @@ export default class GalleryItem extends Component {
                       [styles['visible']]: this.state.showContent
                     })}
                   >
-                    <GalleryItem galleries={galleries} gallery={subGallery} />
+                    <GalleryItem
+                      galleries={galleries}
+                      gallery={subGallery}
+                      isIE11={isIE11}
+                    />
                   </div>
                 ))}
           </div>

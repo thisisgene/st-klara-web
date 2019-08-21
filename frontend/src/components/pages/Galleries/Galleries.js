@@ -12,7 +12,8 @@ export default class Galleries extends Component {
     perPage: 30,
     looping: true,
     galleries: [],
-    isLoaded: false
+    isLoaded: false,
+    isIE11: this.props.isIE11
   }
   getRequest = currentPage => {
     axios
@@ -39,8 +40,7 @@ export default class Galleries extends Component {
     this.getRequest(0)
   }
   render() {
-    const { looping, galleries } = this.state
-
+    const { looping, galleries, isIE11 } = this.state
     return (
       <div className={styles['galleries']}>
         <h1>Galerie</h1>
@@ -54,6 +54,7 @@ export default class Galleries extends Component {
                 galleries={galleries}
                 gallery={gallery}
                 topLevel={true}
+                isIE11={isIE11}
               />
             ))
         ) : (

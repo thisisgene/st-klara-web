@@ -60,6 +60,7 @@ export default class Galleries extends Component {
               showContent={true}
               previouslyOpened={true}
               noTitleImage={true}
+              isIE11={this.props.isIE11}
             />
           </div>
         )}
