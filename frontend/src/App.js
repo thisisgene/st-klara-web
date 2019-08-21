@@ -10,6 +10,7 @@ import ScrollToTop from './ScrollToTop'
 import './App.sass'
 
 function App() {
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode
   return (
     <div className="App">
       <Router>
@@ -18,7 +19,7 @@ function App() {
           <ScrollToTop>
             <CoverImage />
             <div className="main-container">
-              <Dashboard />
+              <Dashboard isIE11={isIE11} />
               <SideContactBox />
             </div>
           </ScrollToTop>

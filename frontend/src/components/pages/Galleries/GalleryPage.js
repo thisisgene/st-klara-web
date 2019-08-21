@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 
 import GalleryItem from './GalleryItem'
@@ -50,7 +50,7 @@ export default class Galleries extends Component {
     const { isLoaded, gallery } = this.state
 
     return (
-      <div>
+      <Fragment>
         {isLoaded && (
           <div className={styles['galleries']}>
             <h1>Galerie</h1>
@@ -63,7 +63,7 @@ export default class Galleries extends Component {
             />
           </div>
         )}
-      </div>
+      </Fragment>
     )
   }
 }
