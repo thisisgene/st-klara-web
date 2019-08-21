@@ -65,7 +65,7 @@ export class ImageWrapper extends Component {
     return (
       <div
         className={cx(styles['gallery-item--images'], {
-          [styles['ie11']]: isIE11
+          [styles['ie11']]: !isIE11
         })}
       >
         {images.map((item, index) => (
