@@ -21,17 +21,18 @@ export default class Galleries extends Component {
         `/wp-json/custom-routes/v1/gallerie-basic?amount=${this.state.perPage}&offset=${currentPage}`
       )
       .then(res => {
-        if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
-          console.log(currentPage + this.state.perPage)
-          console.log(res.headers['x-wp-total'])
+        if (res.data.length > 0) {
+          console.log(currentPage)
           let array = this.state.galleries
           array = [...array, ...res.data]
           this.setState({ galleries: array })
           this.getRequest(currentPage + this.state.perPage)
         } else {
+          console.log(currentPage)
           let array = this.state.galleries
           array = [...array, ...res.data]
           this.setState({ galleries: array, looping: false })
+          console.log('array: ', array)
         }
       })
       .catch(err => console.log(err))
