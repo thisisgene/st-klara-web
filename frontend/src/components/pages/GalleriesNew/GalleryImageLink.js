@@ -58,7 +58,7 @@ export default class GalleryImageLink extends Component {
 
   componentDidMount() {
     axios
-      .get(`/wp-json/better-rest-endpoints/v1/galleries/${this.props.id}`)
+      .get(`/wp-json/wp/v2/galleries/${this.props.id}`)
       .then(res => {
         this.setState({
           isLoaded: true,
