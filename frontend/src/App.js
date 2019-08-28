@@ -11,6 +11,7 @@ import './App.sass'
 
 function App() {
   const isIE11 = !!window.MSInputMethodContext && !!document.documentMode
+
   return (
     <div className="App">
       <Router>

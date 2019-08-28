@@ -25,7 +25,9 @@ export class Dashboard extends Component {
           <Route
             exact
             path="/seite/galerie"
-            render={() => <Galleries isIE11={isIE11} />}
+            render={({ location }) => (
+              <Galleries isIE11={isIE11} location={location} />
+            )}
           />
           <Route
             exact

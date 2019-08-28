@@ -57,6 +57,7 @@ export default class Galleries extends Component {
                 gallery={gallery}
                 topLevel={true}
                 isIE11={isIE11}
+                hash={this.props.location.hash}
               />
             ))
         ) : (

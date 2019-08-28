@@ -15,13 +15,38 @@ import Spinner from '../../common/Spinner/Spinner'
 export default class GalleryItem extends Component {
   state = {
     showContent: false,
+    hash: this.props.hash.substr(1),
     previouslyOpened: false
   }
 
-  toggleContent = () => {
-    this.setState({
-      showContent: !this.state.showContent
-    })
+  componentDidMount() {
+    if (
+      !this.state.showContent &&
+      this.state.hash === this.props.gallery.id.toString()
+    ) {
+      this.setState({ showContent: true, previouslyOpened: true })
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.hash !== this.props.hash) {
+      this.setState(
+        {
+          hash: this.props.hash.substr(1)
+        },
+        () => {
+          let cleanHash = this.state.hash
+
+          this.setState({
+            showContent: cleanHash === this.props.gallery.id.toString()
+          })
+        }
+      )
+    }
+  }
+
+  toggleContent = hash => {
+    console.log('hashhsh: ', hash)
+    window.location.hash = hash
     if (!this.state.previouslyOpened) {
       this.setState({ previouslyOpened: true })
     }
@@ -32,6 +57,7 @@ export default class GalleryItem extends Component {
     const filteredChildren = children.filter(
       child => child.parent_dir === gallery.id.toString()
     )
+
     return (
       <div className={styles['gallery-item']}>
         <div
@@ -44,7 +70,7 @@ export default class GalleryItem extends Component {
             //   [styles['contains-images']]: this.state.imageList.length > 0
             // }
           )}
-          onClick={topLevel && this.toggleContent}
+          onClick={topLevel && this.toggleContent.bind(this, gallery.id)}
         >
           <div
             className={styles['gallery-item--title']}
