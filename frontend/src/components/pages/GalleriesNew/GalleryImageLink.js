@@ -14,6 +14,7 @@ export class ImageItem extends Component {
     axios
       .get(`/wp-json/wp/v2/media/${this.props.id}`)
       .then(res => {
+        console.log('howdi dodi')
         this.setState({
           image: res.data,
           isLoaded: true
@@ -44,8 +45,13 @@ export class ImageItem extends Component {
             />
           </div>
         ) : (
-          <div className={styles['image-spinner']}>
-            <Spinner />
+          <div
+            // onClick={onClick.bind(this, image.id)}
+            className={styles['gallery-img-wrapper']}
+          >
+            <div className={styles['image-spinner']}>
+              <Spinner />
+            </div>
           </div>
         )}
       </Fragment>
@@ -69,7 +75,8 @@ export default class GalleryImageLink extends Component {
   }
 
   getTitleImage = gallery => {
-    if (gallery.featured_media) {
+    if (gallery.featured_media !== 0) {
+      console.log('YES FEATURE IMG')
       return (
         // <p>hallo</p>
         <ImageItem
@@ -82,11 +89,16 @@ export default class GalleryImageLink extends Component {
         />
       )
     } else {
+      console.log('NO FEATURE IMG')
       let parser = new DOMParser()
-      let htmlDoc = parser.parseFromString(gallery.content, 'text/html')
+      let htmlDoc = parser.parseFromString(
+        gallery.content.rendered,
+        'text/html'
+      )
       let htmlCollection = htmlDoc.querySelectorAll('img')
       let htmlArray = Array.from(htmlCollection)
       const item = htmlArray[0]
+      console.log('item ', item)
       if (htmlArray.length > 0) {
         return (
           // <p>{item.src}</p>
