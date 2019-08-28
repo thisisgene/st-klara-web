@@ -2,13 +2,15 @@ import React, { Component, Fragment } from 'react'
 
 import axios from 'axios'
 import Spinner from '../../common/Spinner/Spinner'
+import ImgPlaceholder from '../../common/assets/img_placeholder.png'
 
 import styles from './Galleries.module.sass'
 
 export class ImageItem extends Component {
   state = {
     image: {},
-    isLoaded: false
+    isLoaded: false,
+    imageNotFound: false
   }
   componentDidMount() {
     axios
@@ -21,7 +23,12 @@ export class ImageItem extends Component {
         })
         this.props.addToList(res.data, this.props.index)
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({
+          imageNotFound: true
+        })
+        console.log(err)
+      })
   }
   render() {
     const { index, src, id, onClick } = this.props
@@ -52,6 +59,14 @@ export class ImageItem extends Component {
             <div className={styles['image-spinner']}>
               <Spinner />
             </div>
+          </div>
+        )}
+        {this.state.imageNotFound && (
+          <div
+            // onClick={onClick.bind(this, image.id)}
+            className={styles['gallery-img-wrapper']}
+          >
+            <img src={ImgPlaceholder} alt="" />
           </div>
         )}
       </Fragment>
