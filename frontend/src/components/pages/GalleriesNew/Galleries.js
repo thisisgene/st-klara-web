@@ -18,10 +18,12 @@ export default class Galleries extends Component {
   getRequest = currentPage => {
     axios
       .get(
-        `/wp-json/better-rest-endpoints/v1/galleries?content=false&media=false&per_page=${this.state.perPage}&offset=${currentPage}`
+        `/wp-json/custom-routes/v1/gallerie-basic?amount=${this.state.perPage}&offset=${currentPage}`
       )
       .then(res => {
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
+          console.log(currentPage + this.state.perPage)
+          console.log(res.headers['x-wp-total'])
           let array = this.state.galleries
           array = [...array, ...res.data]
           this.setState({ galleries: array })
@@ -39,13 +41,14 @@ export default class Galleries extends Component {
   }
   render() {
     const { looping, galleries, isIE11 } = this.state
+
     return (
       <div className={styles['galleries']}>
         <h1>Galerie</h1>
         <br />
         {!looping ? (
           galleries
-            .filter(gallery => gallery.acf.parent_dir === false)
+            .filter(gallery => gallery.parent_dir === '')
             .map((gallery, index) => (
               <GalleryItem
                 key={index}

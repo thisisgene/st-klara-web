@@ -30,7 +30,7 @@ export default class GalleryItem extends Component {
   render() {
     const { children, gallery, topLevel, isIE11 } = this.props
     const filteredChildren = children.filter(
-      child => child.acf.parent_dir.ID === gallery.id
+      child => child.parent_dir === gallery.id.toString()
     )
     return (
       <div className={styles['gallery-item']}>
