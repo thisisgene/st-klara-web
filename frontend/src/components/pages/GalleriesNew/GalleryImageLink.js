@@ -16,38 +16,36 @@ export class ImageItem extends Component {
     axios
       .get(`/wp-json/wp/v2/media/${this.props.id}`)
       .then(res => {
-        console.log('howdi dodi')
+        const image = res.data
         this.setState({
-          image: res.data,
+          imageSrc:
+            image.media_details &&
+            image.media_details.sizes &&
+            image.media_details.sizes.thumbnail
+              ? image.media_details.sizes.thumbnail.source_url
+              : image.media_details.sizes.full.source_url,
           isLoaded: true
         })
-        this.props.addToList(res.data, this.props.index)
       })
       .catch(err => {
-        this.setState({
-          imageNotFound: true
-        })
-        console.log(err)
+        if (err) {
+          console.log(err)
+        }
       })
   }
   render() {
     const { index, src, id, onClick } = this.props
-    const { isLoaded, image } = this.state
+    const { isLoaded, imageSrc } = this.state
     return (
       <Fragment>
-        {image && isLoaded ? (
+        {imageSrc && isLoaded ? (
           <div
             // onClick={onClick.bind(this, image.id)}
             className={styles['gallery-img-wrapper']}
           >
             <img
-              src={
-                image.media_details &&
-                image.media_details.sizes &&
-                image.media_details.sizes.thumbnail
-                  ? image.media_details.sizes.thumbnail.source_url
-                  : image.media_details.sizes.full.source_url
-              }
+              src={imageSrc}
+              onError={() => this.setState({ imageSrc: ImgPlaceholder })}
               alt=""
             />
           </div>
@@ -59,14 +57,6 @@ export class ImageItem extends Component {
             <div className={styles['image-spinner']}>
               <Spinner />
             </div>
-          </div>
-        )}
-        {this.state.imageNotFound && (
-          <div
-            // onClick={onClick.bind(this, image.id)}
-            className={styles['gallery-img-wrapper']}
-          >
-            <img src={ImgPlaceholder} alt="" />
           </div>
         )}
       </Fragment>
@@ -134,6 +124,10 @@ export default class GalleryImageLink extends Component {
 
   render() {
     const { gallery } = this.state
-    return <div>{gallery && <div>{this.getTitleImage(gallery)}</div>}</div>
+    return (
+      <div className={styles['gallery-wrapper']}>
+        {gallery && <div>{this.getTitleImage(gallery)}</div>}
+      </div>
+    )
   }
 }
