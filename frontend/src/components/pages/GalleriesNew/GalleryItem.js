@@ -45,8 +45,12 @@ export default class GalleryItem extends Component {
   }
 
   toggleContent = hash => {
-    console.log('hashhsh: ', hash)
-    window.location.hash = hash
+    console.log('HASDHHHHHH', hash, this.state.hash)
+    if (this.state.hash === hash.toString()) {
+      window.location.hash = ''
+    } else {
+      window.location.hash = hash
+    }
     if (!this.state.previouslyOpened) {
       this.setState({ previouslyOpened: true })
     }
