@@ -18,7 +18,7 @@ export default class Galleries extends Component {
   getRequest = currentPage => {
     axios
       .get(
-        `/wp-json/wp/v2/galleries/?per_page=${this.state.perPage}&offset=${currentPage}`
+        `/wp-json/better-rest-endpoints/v1/galleries?content=false&media=false&per_page=${this.state.perPage}&offset=${currentPage}`
       )
       .then(res => {
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
@@ -49,7 +49,7 @@ export default class Galleries extends Component {
             .map((gallery, index) => (
               <GalleryItem
                 key={index}
-                galleries={galleries}
+                children={galleries}
                 gallery={gallery}
                 topLevel={true}
                 isIE11={isIE11}
