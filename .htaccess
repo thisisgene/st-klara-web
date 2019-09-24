@@ -1,3 +1,9 @@
+php_value upload_max_filesize 256M
+php_value post_max_size 256M
+php_value memory_limit 256M
+php_value max_execution_time 300
+php_value max_input_time 300
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -10,8 +16,3 @@ RewriteRule . /index.php [L]
 
 # END WordPress
 
-php_value upload_max_filesize 256M
-php_value post_max_size 256M
-php_value memory_limit 256M
-php_value max_execution_time 300
-php_value max_input_time 300
