@@ -8,23 +8,43 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: daEIUF82hdd8_a2f
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: ckj32fn3-df3a2j
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - wpsite
+
+  # DB Backup
+  mysql-backup:
+    image: databack/mysql-backup
+    restart: always
+    environment:
+      - DB_SERVER=db
+      - DB_USER=${MYSQL_USER}
+      - DB_PASS=${MYSQL_PASSWORD}
+      - DB_DUMP_TARGET=s3://st-klara/mysqlbackups
+      - DB_DUMP_DEBUG=true
+      - DB_DUMP_FREQ=4320
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL}
+    networks:
+      - wpsite
+
   # phpmyadmin
   phpmyadmin:
     depends_on:
       - db
     image: phpmyadmin/phpmyadmin
+    volumes:
+      - ./config/php.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: always
     ports:
       - '8080:80'
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: daEIUF82hdd8_a2f
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - wpsite
   # Wordpress
@@ -41,25 +61,20 @@ services:
     volumes: ['./:/var/www/html']
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: ckj32fn3-df3a2j
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - wpsite
   #frontend
-  # frontend:
-  #   volumes:
-  #     - ./frontend/src:/usr/src/app/src
-  #     - ./frontend/public:/usr/src/app/public
-  #   command: npm run start
-  #   container_name: frontend
-  #   expose:
-  #     - '3000'
-  #   image: node
-  #   build: ./frontend
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - wpsite
+  frontend:
+    container_name: frontend-prod
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-prod
+    ports:
+      - '3000:3000'
+    networks:
+      - wpsite
 
 networks:
   wpsite:
