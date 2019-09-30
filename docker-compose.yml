@@ -17,6 +17,8 @@ services:
 
   # DB Backup
   mysql-backup:
+    depends_on:
+      - db
     image: databack/mysql-backup
     restart: always
     environment:
@@ -78,5 +80,5 @@ services:
 
 networks:
   wpsite:
-# volumes:
-#   db_data:
+volumes:
+  db_data:
