@@ -2,6 +2,8 @@
 
 .env
 
+
+
 # dependencies
 node_modules
 frontend/node_modules
@@ -11,6 +13,7 @@ frontend/node_modules
 .pnp.js
 
 wp-content
+wp-config.php
 
 # testing
 /coverage
