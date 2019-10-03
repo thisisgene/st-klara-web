@@ -44,6 +44,7 @@ services:
     restart: always
     ports:
       - '8080:80'
+      - '8080:443'
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -59,6 +60,7 @@ services:
     image: wordpress:latest
     ports:
       - '8000:80'
+      - '8000:443'
     restart: always
     volumes: ['./:/var/www/html']
     environment:
