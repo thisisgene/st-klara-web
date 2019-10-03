@@ -67,24 +67,7 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_CONFIG_EXTRA: |
-        /* Site URL */
-        define('WP_HOME', 'https://st-klara-nuernberg.de/admin');     # <-- CHANGEME
-        define('WP_SITEURL', 'https://st-klara-nuernberg.de/admin');  # <-- CHANGEME
-        /* Developer friendly settings */
-        # define('SCRIPT_DEBUG', true);
-        # define('CONCATENATE_SCRIPTS', false);
-        # define('WP_DEBUG', true);
-        # define('WP_DEBUG_LOG', true);
-        # define('SAVEQUERIES', true);
-        /* Multisite */
-        # define('WP_ALLOW_MULTISITE', true );
-        # define('MULTISITE', true);
-        # define('SUBDOMAIN_INSTALL', false);
-        # define('DOMAIN_CURRENT_SITE', 'wordpress.example.com');  # <-- CHANGEME
-        # define('PATH_CURRENT_SITE', '/');
-        # define('SITE_ID_CURRENT_SITE', 1);
-        # define('BLOG_ID_CURRENT_SITE', 1);
+
     networks:
       - wpsite
   #frontend
