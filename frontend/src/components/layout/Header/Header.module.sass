@@ -112,9 +112,14 @@
     img
       width: 70%
   
+  @media(max-width: 860px)
+    &--logo, &--logo-wide
+      width: 160px
+    
   @media(max-width: 768px)
     &--logo
       display: block
+      width: 220px
     &--logo-wide.visible
       display: none
   @media(max-width: 320px)
