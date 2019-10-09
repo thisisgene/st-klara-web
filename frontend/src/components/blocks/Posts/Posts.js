@@ -18,9 +18,7 @@ export default class Posts extends Component {
   getRequest = currentPage => {
     axios
       .get(
-        `/wp-json/wp/v2/${this.props.category}/?per_page=${
-          this.state.perPage
-        }&offset=${currentPage}`
+        `/wp-json/wp/v2/${this.props.category}/?per_page=${this.state.perPage}&offset=${currentPage}`
       )
       .then(res => {
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
@@ -62,6 +60,7 @@ export default class Posts extends Component {
           <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
             {posts
               // .filter(post => onlyAfterToday && (post) => this.checkDate(post.afc.date_time))
+              .sort((a, b) => (a.acf.date_time > b.acf.date_time ? 1 : -1))
               .map((post, index) => (
                 <div key={index}>
                   {limitTo ? (
