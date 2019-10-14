@@ -10,6 +10,7 @@ export default class Events extends Component {
           category={'events'}
           categoryTitle="Veranstaltungen"
           mainLink={'seite/veranstaltungen'}
+          onlyUpcoming={true}
         />
       </div>
     )

@@ -62,7 +62,7 @@ services:
       - '8000:80'
       # - '8000:443'
     restart: always
-    volumes: ['./:/var/www/html']
+    volumes: ['./:/var/www/html:rw']
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER}
