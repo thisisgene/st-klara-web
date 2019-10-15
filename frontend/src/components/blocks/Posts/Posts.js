@@ -106,7 +106,7 @@ export default class Posts extends Component {
             {category === 'events' && gotEventProgram && eventProgram && (
               <div className={styles['posts--all-events-link']}>
                 <a href={`${eventProgram}`} target="_blank">
-                  Aktuelles Veranstaltungsprogramm
+                  Aktuelles Veranstaltungsprogramm (PDF)
                 </a>
               </div>
             )}
