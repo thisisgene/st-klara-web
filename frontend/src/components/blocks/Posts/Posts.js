@@ -17,7 +17,9 @@ export default class Posts extends Component {
   state = {
     posts: [],
     perPage: 30,
-    looping: true
+    looping: true,
+    eventProgram: '',
+    gotEventProgram: false
   }
   getRequest = currentPage => {
     axios
@@ -48,8 +50,28 @@ export default class Posts extends Component {
       })
       .catch(err => console.log(err))
   }
+
+  getEventProgram = () => {
+    axios.get(`/wp-json/wp/v2/pages`).then(res => {
+      let eventProgram = res.data.filter(
+        page => page.title.rendered === 'Veranstaltungsprogramm'
+      )[0]
+      console.log('eventProgram', eventProgram)
+      if (eventProgram !== undefined) {
+        this.setState({
+          eventProgram: eventProgram.acf.event_pdf,
+          gotEventProgram: true
+        })
+      }
+    })
+  }
+
   componentDidMount() {
     this.getRequest(0)
+
+    if (this.props.category === 'events') {
+      this.getEventProgram()
+    }
   }
 
   checkDate = date => {
@@ -65,7 +87,7 @@ export default class Posts extends Component {
   }
 
   render() {
-    const { looping, posts } = this.state
+    const { looping, posts, eventProgram, gotEventProgram } = this.state
     const {
       category,
       categoryTitle,
@@ -78,8 +100,16 @@ export default class Posts extends Component {
         <div className={cx('main-title', styles['posts--title'])}>
           {categoryTitle}
         </div>
+
         {!looping ? (
           <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
+            {category === 'events' && gotEventProgram && eventProgram && (
+              <div className={styles['posts--all-events-link']}>
+                <a href={`${eventProgram}`} target="_blank">
+                  Aktuelles Veranstaltungsprogramm
+                </a>
+              </div>
+            )}
             {posts
               // .filter(
               //   post =>

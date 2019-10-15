@@ -32,7 +32,7 @@ export default class CoverImage extends Component {
 
     let htmlCollection = htmlDoc.querySelectorAll('img')
     let htmlArray = Array.from(htmlCollection)
-    console.log(htmlArray)
+    // console.log(htmlArray)
     return htmlArray
   }
 
@@ -43,7 +43,7 @@ export default class CoverImage extends Component {
       .map((page, index) => {
         if (index === 0) return this.getImgFromPage(page.content.rendered)
       })
-    console.log(img[0])
+    // console.log(img[0])
     return (
       <div
         className={cx(styles['cover-image-container'], {
