@@ -30,8 +30,8 @@ export default class Posts extends Component {
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
           let array = this.state.posts
 
-          let data = res.data.filter(
-            post => post.acf.date_time && this.checkDate(post.acf.date_time)
+          let data = res.data.filter(post =>
+            post.acf.date_time ? this.checkDate(post.acf.date_time) : post
           )
           array = [...array, ...data]
 
@@ -102,37 +102,67 @@ export default class Posts extends Component {
         </div>
 
         {!looping ? (
-          <div className={cx(styles['posts--wrapper'], styles[`${category}`])}>
-            {category === 'events' && gotEventProgram && eventProgram && (
-              <div className={styles['posts--all-events-link']}>
-                <a href={`${eventProgram}`} target="_blank">
-                  Aktuelles Veranstaltungsprogramm (PDF)
-                </a>
+          <>
+            {category === 'events' ? (
+              <div
+                className={cx(styles['posts--wrapper'], styles[`${category}`])}
+              >
+                {gotEventProgram && eventProgram && (
+                  <div className={styles['posts--all-events-link']}>
+                    <a href={`${eventProgram}`} target="_blank">
+                      Aktuelles Veranstaltungsprogramm (PDF)
+                    </a>
+                  </div>
+                )}
+                {posts
+
+                  .sort((a, b) => (a.acf.date_time > b.acf.date_time ? 1 : -1))
+                  .map((post, index) => (
+                    <div key={index}>
+                      {limitTo ? (
+                        index <= limitTo - 1 && (
+                          <PostPreview
+                            key={index}
+                            post={post}
+                            category={category}
+                          />
+                        )
+                      ) : (
+                        <PostPreview
+                          key={index}
+                          post={post}
+                          category={category}
+                        />
+                      )}
+                    </div>
+                  ))}
               </div>
-            )}
-            {posts
-              // .filter(
-              //   post =>
-              //     // onlyUpcoming &&
-              //     post.acf.date_time && this.checkDate(post.acf.date_time)
-              // )
-              .sort((a, b) => (a.acf.date_time > b.acf.date_time ? 1 : -1))
-              .map((post, index) => (
-                <div key={index}>
-                  {limitTo ? (
-                    index <= limitTo - 1 && (
+            ) : (
+              <div
+                className={cx(styles['posts--wrapper'], styles[`${category}`])}
+              >
+                {posts.map((post, index) => (
+                  <div key={index}>
+                    {limitTo ? (
+                      index <= limitTo - 1 && (
+                        <PostPreview
+                          key={index}
+                          post={post}
+                          category={category}
+                        />
+                      )
+                    ) : (
                       <PostPreview
                         key={index}
                         post={post}
                         category={category}
                       />
-                    )
-                  ) : (
-                    <PostPreview key={index} post={post} category={category} />
-                  )}
-                </div>
-              ))}
-          </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div className={spinnerStyles['spinner-container']}>
             <div className={spinnerStyles['spinner-container--wrapper']}>
