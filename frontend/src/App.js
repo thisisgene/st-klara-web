@@ -7,7 +7,12 @@ import Dashboard from './components/main/Dashboard'
 import SideContactBox from './components/main/SideContactBox'
 import ScrollToTop from './ScrollToTop'
 
+import ReactGA from 'react-ga' // Google Analytics
+
 import './App.sass'
+
+ReactGA.initialize('UA-151135364-1')
+ReactGA.pageview(window.location.pathname + window.location.search)
 
 function App() {
   const isIE11 = !!window.MSInputMethodContext && !!document.documentMode
