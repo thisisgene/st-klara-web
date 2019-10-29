@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import Posts from '../../blocks/Posts/Posts'
-
 import cx from 'classnames'
 import styles from './Home.module.sass'
 

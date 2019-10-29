@@ -1,0 +1,46 @@
+.cookie-consent
+  position: fixed
+  bottom: 0
+  left: 0
+  width: 100vw
+  padding: 1rem
+  font-size: .9rem
+  background: #E6E6E6
+  z-index: 100
+  a
+    font-weight: bold
+  &--content
+    max-width: 1080px
+    margin: 0 auto
+    display: flex
+    align-items: center
+
+    &__text
+      margin-right: 2rem
+    &__button button
+      cursor: pointer
+      border: none
+      background: #FCB913
+      padding: .3rem .8rem
+      margin-right: 1.4rem
+      // color: white
+      &:hover
+        opacity: .8
+  @media(max-width: 970px)
+    margin-right: 0
+    width: 100vw
+    padding: 1rem 0
+    font-size: 1rem
+    &--content
+      display: block
+      justify-content: center
+      text-align: center
+      &__text
+        padding: 0 1rem
+        line-height: 1.05
+        margin-bottom: 1rem
+        margin-right: 0
+  @media(max-width: 640px)
+    &--content__button button
+      width: 80%
+      padding: .4rem

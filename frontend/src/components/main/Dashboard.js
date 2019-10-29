@@ -10,14 +10,30 @@ import Galleries from '../pages/GalleriesNew/Galleries'
 import Events from '../pages/Events/Events'
 import Press from '../pages/Press/Press'
 import GalleryPage from '../pages/Galleries/GalleryPage'
+import CookieConsent from '../common/CookieConsent/CookieConsent'
 
 import cx from 'classnames'
 import styles from './Dashboard.module.sass'
 
 export class Dashboard extends Component {
+  state = {
+    showCookieConsent: true
+  }
+  componentDidMount() {
+    this.setState({
+      showCookieConsent: !localStorage.getItem('cookieAccept')
+    })
+  }
+
+  cookieAccept = () => {
+    this.setState({
+      showCookieConsent: false
+    })
+    localStorage.setItem('cookieAccept', true)
+  }
+
   render() {
     const { isIE11 } = this.props
-    console.log('DAS IST ER ', isIE11)
     return (
       <div className={styles['dashboard']}>
         <Route exact path="/" component={Home} />
@@ -42,6 +58,9 @@ export class Dashboard extends Component {
           <Route exact path="/seite/presse" component={Press} />
           <Route exact path="/seite/:toppage/:page" component={PageContent} />
         </Switch>
+        {this.state.showCookieConsent && (
+          <CookieConsent handleClick={this.cookieAccept} />
+        )}
       </div>
     )
   }
