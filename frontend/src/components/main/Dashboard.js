@@ -58,9 +58,9 @@ export class Dashboard extends Component {
           <Route exact path="/seite/presse" component={Press} />
           <Route exact path="/seite/:toppage/:page" component={PageContent} />
         </Switch>
-        {/* {this.state.showCookieConsent && (
+        {this.state.showCookieConsent && (
           <CookieConsent handleClick={this.cookieAccept} />
-        )} */}
+        )}
       </div>
     )
   }
