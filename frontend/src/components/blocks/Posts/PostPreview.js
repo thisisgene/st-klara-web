@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import moment from 'moment'
-import localization from 'moment/locale/de'
+import moment from 'moment';
+import localization from 'moment/locale/de';
 
-import ImageItem from '../ImageItem'
+import ImageItem from '../ImageItem';
 
-import styles from './Posts.module.sass'
+import styles from './Posts.module.sass';
 
 export default class PostPreview extends Component {
   state = {
     showPlayer: false
-  }
+  };
 
   onShowPlayerClick = () => {
-    this.setState({ showPlayer: true })
-  }
+    this.setState({ showPlayer: true });
+  };
 
   render() {
-    const { post, category } = this.props
+    const { post, category } = this.props;
     return (
       <div className={styles['post']}>
         <div className={styles['post-text']}>
@@ -26,7 +26,7 @@ export default class PostPreview extends Component {
             className={styles['post--title']}
             dangerouslySetInnerHTML={{ __html: post.title.rendered }}
           />
-          {category === 'events' && (
+          {category === 'events' && post.acf.date_time !== '' && (
             <div className={styles['post--date']}>
               {moment(post.acf.date_time)
                 .locale('de', localization)
@@ -59,6 +59,27 @@ export default class PostPreview extends Component {
               )}
             </div>
           )}
+          {category === 'videos' && post.acf.file && (
+            <div>
+              {this.state.showPlayer ? (
+                <div className={styles['podcast']}>
+                  <video width="100%" controls ref={ref => (this.player = ref)}>
+                    <source
+                      src={post.acf.file.url}
+                      type={post.acf.file.mime_type}
+                    />
+                  </video>
+                </div>
+              ) : (
+                <button
+                  onClick={this.onShowPlayerClick}
+                  className={'button-link'}
+                >
+                  ansehen...
+                </button>
+              )}
+            </div>
+          )}
         </div>
         {post.featured_media !== 0 && (
           <div className={styles['post-image']}>
@@ -66,6 +87,6 @@ export default class PostPreview extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
