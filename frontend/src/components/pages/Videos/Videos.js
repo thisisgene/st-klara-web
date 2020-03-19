@@ -23,7 +23,8 @@ export default class Videos extends Component {
         `/wp-json/wp/v2/videos/?per_page=${this.state.perPage}&offset=${currentPage}`
       )
       .then(res => {
-        console.log(res.data);
+        console.log('res.data: ', res.data);
+        console.log('res: ', res);
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
           let array = this.state.videos;
           array = [...array, ...res.data];
