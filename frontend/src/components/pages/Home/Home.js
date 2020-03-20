@@ -10,18 +10,25 @@ export default class Home extends Component {
     return (
       <div className={styles['home']}>
         <div className={styles['home--wrapper']}>
-          <Posts category={'videos'} categoryTitle="Videos" limitTo={2} />
-          <div className={styles['main-link']}>
-            <Link to={'/seite/videos'}>Alle Videos</Link>
-          </div>
           <Posts
             category={'events'}
             categoryTitle="Veranstaltungen"
             onlyAfterToday={true}
             limitTo={4}
           />
-          <div className={cx(styles['main-link'], styles['grey'])}>
+
+          <div
+            className={cx(
+              styles['main-link'],
+              styles['grey'],
+              styles['bottom-space']
+            )}
+          >
             <Link to={'/seite/veranstaltungen'}>Alle Veranstaltungen</Link>
+          </div>
+          <Posts category={'videos'} categoryTitle="Videos" limitTo={2} />
+          <div className={styles['main-link']}>
+            <Link to={'/seite/videos'}>Alle Videos</Link>
           </div>
         </div>
         <div className={styles['home--wrapper']}>
