@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-import PostPreview from './PostPreview';
-import Spinner from '../../common/Spinner/Spinner';
+import PostPreview from './PostPreview'
+import Spinner from '../../common/Spinner/Spinner'
 
-import moment from 'moment';
+import moment from 'moment'
 
-import spinnerStyles from '../../common/Spinner/Spinner.module.sass';
-import cx from 'classnames';
-import styles from './Posts.module.sass';
+import spinnerStyles from '../../common/Spinner/Spinner.module.sass'
+import cx from 'classnames'
+import styles from './Posts.module.sass'
 
-const today = moment(new Date()).format('YYYY-MM-DD');
+const today = moment(new Date()).format('YYYY-MM-DD')
 
 export default class Posts extends Component {
   state = {
@@ -19,8 +19,8 @@ export default class Posts extends Component {
     perPage: 30,
     looping: true,
     eventProgram: '',
-    gotEventProgram: false
-  };
+    gotEventProgram: false,
+  }
   getRequest = currentPage => {
     axios
       .get(
@@ -28,73 +28,71 @@ export default class Posts extends Component {
       )
       .then(res => {
         if (currentPage + this.state.perPage < res.headers['x-wp-total']) {
-          let array = this.state.posts;
+          let array = this.state.posts
 
           let data = res.data.filter(post =>
             post.acf.date_time ? this.checkDate(post.acf.date_time) : post
-          );
-          array = [...array, ...data];
+          )
+          array = [...array, ...data]
 
-          this.setState({ posts: array });
-          this.getRequest(currentPage + this.state.perPage);
+          this.setState({ posts: array })
+          this.getRequest(currentPage + this.state.perPage)
         } else {
-          let array = this.state.posts;
+          let array = this.state.posts
 
           let data = res.data.filter(post =>
             post.acf.date_time ? this.checkDate(post.acf.date_time) : post
-          );
-          array = [...array, ...data];
+          )
+          array = [...array, ...data]
 
-          this.setState({ posts: array, looping: false });
+          this.setState({ posts: array, looping: false })
         }
       })
-      .catch(err => console.log(err));
-  };
+      .catch(err => console.log(err))
+  }
 
   getEventProgram = () => {
     axios.get(`/wp-json/wp/v2/pages`).then(res => {
       let eventProgram = res.data.filter(
         page => page.title.rendered === 'Veranstaltungsprogramm'
-      )[0];
-      console.log('eventProgram', eventProgram);
+      )[0]
+      console.log('eventProgram', eventProgram)
       if (eventProgram !== undefined) {
         this.setState({
           eventProgram: eventProgram.acf.event_pdf,
-          gotEventProgram: true
-        });
+          gotEventProgram: true,
+        })
       }
-    });
-  };
+    })
+  }
 
   componentDidMount() {
-    this.getRequest(0);
+    this.getRequest(0)
 
     if (this.props.category === 'events') {
-      this.getEventProgram();
+      this.getEventProgram()
     }
   }
 
   checkDate = date => {
-    const formattedDate = moment(date)
-      .add(1, 'days')
-      .format('YYYY-MM-DD');
-    console.log(formattedDate, today);
+    const formattedDate = moment(date).add(1, 'days').format('YYYY-MM-DD')
+    console.log(formattedDate, today)
     if (formattedDate > today) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
-  };
+  }
 
   render() {
-    const { looping, posts, eventProgram, gotEventProgram } = this.state;
+    const { looping, posts, eventProgram, gotEventProgram } = this.state
     const {
       category,
       categoryTitle,
       mainLink,
       limitTo,
-      onlyUpcoming
-    } = this.props;
+      onlyUpcoming,
+    } = this.props
     return (
       <div className={styles['posts']}>
         <div className={cx('main-title', styles['posts--title'])}>
@@ -177,6 +175,6 @@ export default class Posts extends Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
