@@ -71,6 +71,7 @@ services:
     networks:
       - wpsite
   #frontend
+
   frontend:
     container_name: frontend-prod
     build:

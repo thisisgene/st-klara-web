@@ -10,7 +10,7 @@ export class ImageItem extends Component {
   state = {
     image: {},
     isLoaded: false,
-    imageNotFound: false
+    imageNotFound: false,
   }
   componentDidMount() {
     axios
@@ -24,7 +24,7 @@ export class ImageItem extends Component {
             image.media_details.sizes.thumbnail
               ? image.media_details.sizes.thumbnail.source_url
               : image.media_details.sizes.full.source_url,
-          isLoaded: true
+          isLoaded: true,
         })
       })
       .catch(err => {
@@ -73,7 +73,7 @@ export default class GalleryImageLink extends Component {
       .then(res => {
         this.setState({
           isLoaded: true,
-          gallery: res.data
+          gallery: res.data,
         })
       })
       .catch(err => console.log(err))

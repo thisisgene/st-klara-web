@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import ReactSwipe from 'react-swipe'
 
 import arrow from '../../common/assets/arrow_right.png'
@@ -9,7 +10,7 @@ import styles from './Galleries.module.sass'
 export default class ImageGallery extends Component {
   state = {
     current: this.props.current,
-    currentSlide: 0
+    currentSlide: 0,
   }
 
   componentDidMount() {
@@ -21,7 +22,7 @@ export default class ImageGallery extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
-        current: this.props.current
+        current: this.props.current,
       })
     }
   }
@@ -29,7 +30,7 @@ export default class ImageGallery extends Component {
   swipeCallback = (index, e) => {
     console.log(this.props.images.length, index)
     this.setState({
-      currentSlide: index
+      currentSlide: index,
     })
   }
 
@@ -44,6 +45,7 @@ export default class ImageGallery extends Component {
         <div className={styles['close-button']} onClick={closeGallery}>
           <i className={'fas fa-times'} />
         </div>
+
         <div className={styles['image-gallery--wrapper']}>
           <div className={cx(styles['image-arrow'], styles['left'])}>
             {this.state.currentSlide > 0 && (
@@ -57,7 +59,7 @@ export default class ImageGallery extends Component {
             swipeOptions={{
               continuous: false,
               startSlide: this.state.currentSlide,
-              callback: (index, e) => this.swipeCallback(index, e)
+              callback: (index, e) => this.swipeCallback(index, e),
             }}
             ref={el => (reactSwipeEl = el)}
             wrapper={{ display: 'flex', alignItems: 'center' }}
@@ -66,9 +68,12 @@ export default class ImageGallery extends Component {
             {images.map((img, index) => (
               <div
                 className={cx(styles['image-gallery--wrapper__image'], {
-                  [styles['visible']]: index === this.state.currentSlide
+                  [styles['visible']]: index === this.state.currentSlide,
                 })}
               >
+                {/* <a href={img.guid.rendered} target="blank">
+                  Bild extern öffnen
+                </a> */}
                 <img
                   className={styles['gallery-image']}
                   src={img.guid.rendered}

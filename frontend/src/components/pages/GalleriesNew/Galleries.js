@@ -13,7 +13,7 @@ export default class Galleries extends Component {
     looping: true,
     galleries: [],
     isLoaded: false,
-    isIE11: this.props.isIE11
+    isIE11: this.props.isIE11,
   }
   getRequest = currentPage => {
     axios
