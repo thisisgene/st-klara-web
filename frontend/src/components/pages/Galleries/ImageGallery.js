@@ -71,9 +71,14 @@ export default class ImageGallery extends Component {
                   [styles['visible']]: index === this.state.currentSlide,
                 })}
               >
-                {/* <a href={img.guid.rendered} target="blank">
-                  Bild extern öffnen
-                </a> */}
+                <div
+                  className={styles['image-gallery--wrapper__image--button']}
+                >
+                  <a href={img.guid.rendered} target="blank">
+                    Original anzeigen
+                  </a>
+                </div>
+
                 <img
                   className={styles['gallery-image']}
                   src={img.guid.rendered}
