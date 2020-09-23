@@ -10,7 +10,9 @@ export default class Kontakt extends Component {
     pages: [],
     newsletterImage: '',
     rundgangImage: '',
-    rundgangId: null
+    rundgangId: null,
+    eventProgram: null,
+    gotEventProgram: false,
   }
 
   componentDidMount() {
@@ -24,6 +26,18 @@ export default class Kontakt extends Component {
         })
       )
       .catch(err => console.log(err))
+    axios.get(`/wp-json/wp/v2/pages`).then(res => {
+      let eventProgram = res.data.filter(
+        page => page.title.rendered === 'Veranstaltungsprogramm'
+      )[0]
+      console.log('eventProgram', eventProgram)
+      if (eventProgram !== undefined) {
+        this.setState({
+          eventProgram: eventProgram.acf.event_pdf,
+          gotEventProgram: true,
+        })
+      }
+    })
     axios.get('/wp-json/wp/v2/pages?slug=newsletter').then(res => {
       axios
         .get(`/wp-json/wp/v2/media/${res.data[0].featured_media}`)
@@ -60,7 +74,9 @@ export default class Kontakt extends Component {
       pages,
       rundgangImage,
       rundgangId,
-      newsletterImage
+      newsletterImage,
+      gotEventProgram,
+      eventProgram
     } = this.state
     if (isLoaded) {
       return (
@@ -78,6 +94,24 @@ export default class Kontakt extends Component {
                 />
               </div>
             ))}
+          <br />
+          <div className={styles['contact--inner']}>
+            <div className={cx('main-title', styles['contact-title'])}>
+              VERANSTALTUNGS-<br />PROGRAMM
+            </div>
+
+            <div className={styles['contact--inner__content']}>
+              {gotEventProgram && eventProgram && (
+                <div className={styles['posts--all-events-link']}>
+                  <a href={`${eventProgram}`} target="_blank">
+                    Aktuelles Veranstaltungsprogramm (PDF)
+                    </a>
+                  <br />
+                  <br />
+                </div>
+              )}
+            </div>
+          </div>
           <br />
           <div className={styles['contact--inner']}>
             <div className={cx('main-title', styles['contact-title'])}>
