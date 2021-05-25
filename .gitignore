@@ -12,6 +12,8 @@ frontend/node_modules
 /.pnp
 .pnp.js
 
+wp-admin
+wp-includes
 wp-content
 wp-config.php
 
