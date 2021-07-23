@@ -56,7 +56,6 @@ export default class Posts extends Component {
       let eventProgram = res.data.filter(
         page => page.title.rendered === 'Veranstaltungsprogramm'
       )[0]
-      console.log('eventProgram', eventProgram)
       if (eventProgram !== undefined) {
         this.setState({
           eventProgram: eventProgram.acf.event_pdf,
@@ -76,7 +75,6 @@ export default class Posts extends Component {
 
   checkDate = date => {
     const formattedDate = moment(date).add(1, 'days').format('YYYY-MM-DD')
-    console.log(formattedDate, today)
     if (formattedDate > today) {
       return true
     } else {

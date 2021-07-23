@@ -30,7 +30,7 @@ export default class PostPreview extends Component {
             <div className={styles['post--date']}>
               {moment(post.acf.date_time)
                 .locale('de', localization)
-                .format('DD. MMMM YYYY - HH:mm')}{' '}
+                .format('dddd, DD. MMMM YYYY - HH:mm')}{' '}
               Uhr
             </div>
           )}
